@@ -1,0 +1,23 @@
+<div *ngFor="let field of fields">
+    {{field.name}}
+    <span [ngSwitch]="field.type" class="ui-grid-col-12">
+      <p-checkbox 
+          *ngSwitchCase="'boolean'"
+          [(ngModel)]="field.value" binary="true"
+          (onChange)="onVarValueChanged(field)">
+      </p-checkbox> 
+
+      <input *ngSwitchCase="'string'"
+          type="text" class="component" pInputText value="field.value" 
+          [(ngModel)]="field.value" (input)="onVarValueChanged(field)">
+      <p-spinner *ngSwitchCase="'number'"
+          [(ngModel)]="field.value" 
+          [min]="field.min" [max]="field.max"
+          (onChange)="onVarValueChanged(field)"
+          (input)="onVarValueChanged(field)">
+      </p-spinner>
+    </span>
+  </div>
+
+<button pButton type="button" label="Add" (click)="accept(params)"></button>
+<button pButton type="button" label="Cancel" (click)="cancel()"></button>
