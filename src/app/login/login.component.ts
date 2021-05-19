@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit{
     private username: string;
     private password: string;
 
+    displayEditDialog = false;
 
     constructor() {
 
