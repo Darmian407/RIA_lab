@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'LabRIA'`, () => {
+  it(`should have as title 'prime-ng'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('LabRIA');
+    expect(app.title).toEqual('prime-ng');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('LabRIA app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('prime-ng app is running!');
   });
 });

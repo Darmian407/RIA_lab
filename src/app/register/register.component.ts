@@ -5,31 +5,31 @@ import { User } from '../model/User';
 import { AuthService } from '../services/auth.service';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
     message: Message | undefined;
 
-    public loginForm: FormGroup = new FormGroup({});
+    public registerForm: FormGroup = new FormGroup({});
 
-    constructor(private auth: AuthService) { }
+    constructor(private auth: AuthService) {}
 
     ngOnSubmit() {
         let user = new User();
-        user.username = this.loginForm.controls.username.value;
-        user.password = this.loginForm.controls.password.value;
-        
-        this.auth.login(user).subscribe(
+        user.username = this.registerForm.controls.username.value;
+        user.password = this.registerForm.controls.password.value;
+        user.email = this.registerForm.controls.email.value;
+
+        this.auth.signUp(user).subscribe(
             response => {
                 let msg = new Message();
                 msg.type = 'success';
-                msg.msg = 'Login exitoso';
+                msg.msg = 'Registro exitoso';
 
                 this.message = msg;
-                localStorage.setItem('auth', JSON.stringify(response));
             },
             error => {
                 let msg = new Message();
@@ -42,9 +42,10 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loginForm = new FormGroup({
+        this.registerForm = new FormGroup({
             username: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required]),
+            email: new FormControl('', [Validators.required]),
         });
     }
 

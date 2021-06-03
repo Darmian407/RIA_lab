@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    background: rgb(36, 36, 36);
+    
+}
+
+.p-menubar {
+    background: white !important;
+}
+
+.p-avatar img{
+    height: auto !important;
+}

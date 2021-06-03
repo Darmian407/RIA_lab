@@ -3,58 +3,56 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 
-
-import {ButtonModule} from 'primeng/button';
-import {InputTextModule} from 'primeng/inputtext';
-import { FormsModule } from '@angular/forms';
-
-import {AccordionModule} from 'primeng/accordion';
-
-
-import {MenubarModule} from 'primeng/menubar';
-import {MenuItem} from 'primeng/api';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+//Created components
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
 
-import {PanelMenuModule} from 'primeng/panelmenu';
-
-
-import {PasswordModule} from 'primeng/password';
-
-import {DialogModule} from 'primeng/dialog';
+// PrimeNg Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MenuProfesorComponent } from './menu-profesor/menu-profesor.component';
-
+import { MenubarModule } from 'primeng/menubar';
+import { SharedModule } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { DividerModule } from 'primeng/divider';
+import { RegisterComponent } from './register/register.component';
+import { AuthService } from './services/auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
     NavbarComponent,
     LoginComponent,
-    HomeComponent,
-    MenuProfesorComponent,
-    
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    ButtonModule,
-    InputTextModule,
-    AccordionModule,
-    MenubarModule,
-    PasswordModule,
-    DialogModule,
-    PanelMenuModule,
     BrowserAnimationsModule,
+    MenubarModule,
+    AvatarModule,
+    ButtonModule,
+    SharedModule,
+    DialogModule,
+    CardModule,
+    InputTextModule,
+    PasswordModule,
+    DividerModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MessagesModule,
+    MessageModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

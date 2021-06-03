@@ -1,32 +1,38 @@
 <div class="p-grid p-jc-center p-mt-4">
     <div class="p-col p-md-6 p-xl-4">
-        <p-card header="Login" styleClass="p-card-shadow p-p-3">
-            <form [formGroup]="loginForm" (ngSubmit)="ngOnSubmit()">
+        <p-card header="Register" styleClass="p-card-shadow p-p-3">
+            <form [formGroup]="registerForm" (ngSubmit)="ngOnSubmit()">
                 <div class="p-grid p-formgrid p-flex-column p-fluid">
                     <div class="p-col">
-                        <p-message *ngIf="!loginForm.valid" severity="error" text="Fatan Campos"></p-message>
+                        <p-message *ngIf="!registerForm.valid" severity="error" text="Fatan Campos"></p-message> 
                         <p-message *ngIf="message" severity="{{message.type}}" text="{{message.msg}}"></p-message>
                     </div>
                     <div class="p-col p-mt-3">
                         <span class="p-float-label">
-                            <input id="username" type="text" formControlName="username" pInputText>
-                            <label for="username">Username</label>
+                            <input id="email" type="email" formControlName="email" pInputText>
+                            <label for="email">Email</label>
                         </span>
                     </div>
                     <div class="p-col p-mt-3">
                         <span class="p-float-label">
-                            <p-password id="password" [toggleMask]="true" [feedback]="false" formControlName="password"></p-password>
+                            <input id="userName" type="text" formControlName="username" pInputText>
+                            <label for="userName">User Name</label>
+                        </span>
+                    </div>
+                    <div class="p-col p-mt-3">
+                        <span class="p-float-label">
+                            <p-password id="password" [toggleMask]="true" formControlName="password"></p-password>
                             <label for="password">Password</label>
                         </span>
                     </div>
                     <div class="p-col p-mt-5">
-                        <p-button type="submit" label="Sign in" icon="pi pi-check"></p-button>
+                        <p-button type="submit" label="Register" icon="pi pi-check"></p-button>
                     </div>
                     <div class="p-col p-mt-3">
                         <p-divider align="center"><b>OR</b></p-divider>
                     </div>
                     <div class="p-col p-mt-3">
-                        <p-button label="Register" icon="pi pi-user-plus" routerLink="/register"></p-button>
+                        <p-button label="Login" icon="pi pi-user" routerLink="/login"></p-button>
                     </div>
                 </div>
             </form>
