@@ -25,13 +25,20 @@ import { AuthService } from './services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { EstudianteComponent } from './estudiante/estudiante.component';
+import { CalendarModule } from 'primeng/calendar';
+import { EstudiantesGridComponent } from './estudiantes-grid/estudiantes-grid.component';
+import {TableModule} from 'primeng/table';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    EstudianteComponent,
+    EstudiantesGridComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +57,9 @@ import { MessageModule } from 'primeng/message';
     FormsModule,
     ReactiveFormsModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    CalendarModule,
+    TableModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
