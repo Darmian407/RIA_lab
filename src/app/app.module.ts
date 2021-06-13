@@ -25,13 +25,21 @@ import { AuthService } from './services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { HomeComponent } from './home/home.component';
+import { MenuProfesorComponent } from './menu-profesor/menu-profesor.component';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import {CarouselModule} from 'primeng/carousel';
+import { CarruselComponent } from './carrusel/carrusel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent,
+    MenuProfesorComponent,
+    CarruselComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +58,9 @@ import { MessageModule } from 'primeng/message';
     FormsModule,
     ReactiveFormsModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    PanelMenuModule,
+    CarouselModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
