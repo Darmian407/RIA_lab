@@ -6,6 +6,7 @@ export class Curso {
     descripcion?: string | undefined;
     programa?: string | undefined;
     docenteId?: string | undefined;
+    userId?: string | undefined;
     docente?: User | undefined;
 
     constructor() {}

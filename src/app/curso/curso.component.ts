@@ -30,6 +30,7 @@ export class CursoComponent implements OnInit {
     curso.nombre = this.cursoForm.controls.nombre.value;
     curso.descripcion = this.cursoForm.controls.descripcion.value;
     curso.programa = this.cursoForm.controls.programa.value;
+    curso.userId = '783d7ff2-7616-41de-83aa-c43f5d61b653';
     
     this.cursoService.postCurso(curso).subscribe(
         response => {

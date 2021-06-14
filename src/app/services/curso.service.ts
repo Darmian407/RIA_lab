@@ -13,42 +13,12 @@ export class CursoService {
 
   constructor(private http: HttpClient) { }
 
-  getCursos(){
-
-    let auth = localStorage.getItem('auth');
-
-    if (typeof auth === 'string') {
-      let token = JSON.parse(auth).token;
-      if (auth) {
-
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', `Bearer ${token}`);
-
-        return this.http.get<Curso[]>(this.URL, { headers: headers });
-      }
-    }
-    throw Observable;
-
+  getCursos(){  
+    return this.http.get<Curso[]>(this.URL);
   }
 
   postCurso(curso: Curso) {
-
-    let auth = localStorage.getItem('auth');
-
-    if (typeof auth === 'string') {
-      let token = JSON.parse(auth).token;
-      if (auth) {
-
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', `Bearer ${token}`);
-
-        return this.http.post(this.URL, curso, { headers: headers });
-      }
-    }
-    throw Observable;
-
+    return this.http.post(this.URL, curso);
   }
   getCurso(idCurso: string) {
 

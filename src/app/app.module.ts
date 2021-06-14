@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 //Created components
 import { NavbarComponent } from './navbar/navbar.component';
@@ -29,6 +29,7 @@ import { CursoComponent } from './curso/curso.component';
 import { CursoService } from './services/curso.service';
 import { CursosTableComponent } from './curso/cursos-table/cursos-table.component';
 import {TableModule} from 'primeng/table';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,13 @@ import {TableModule} from 'primeng/table';
     MessageModule,
     TableModule
   ],
-  providers: [AuthService,CursoService],
+  providers: [AuthService,CursoService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
