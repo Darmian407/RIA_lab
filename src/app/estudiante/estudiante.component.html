@@ -1,0 +1,54 @@
+<div class="p-grid p-jc-center p-mt-4">
+    <div class="p-col p-md-6 p-xl-4">
+        <p-card header="Agregar Estudiante" styleClass="p-card-shadow p-p-3">
+            <form [formGroup]="estudianteForm" (ngSubmit)="ngOnSubmit()">
+                <div class="p-grid p-formgrid p-flex-column p-fluid">
+                    <div class="p-col">
+                        <p-message *ngIf="!estudianteForm.valid" severity="error" text="Fatan Campos"></p-message>
+                        <p-message *ngIf="message" severity="{{message.type}}" text="{{message.msg}}"></p-message>
+                    </div>
+                    <div class="p-col p-mt-3">
+                        <span class="p-float-label">
+                            <input id="documento" type="text" formControlName="documento" pInputText>
+                            <label for="documento">Documento</label>
+                        </span>
+                    </div>
+                    <div class="p-col p-mt-3">
+                        <span class="p-float-label">
+                            <input id="primerApellido" type="text" formControlName="primerApellido" pInputText>
+                            <label for="primerApellido">Primer Apellido</label>
+                        </span>
+                    </div>
+                    <div class="p-col p-mt-3">
+                        <span class="p-float-label">
+                            <input id="segundoApellido" type="text" formControlName="segundoApellido" pInputText>
+                            <label for="segundoApellido">Segundo Apellido</label>
+                        </span>
+                    </div>
+                    <div class="p-col p-mt-3">
+                        <span class="p-float-label">
+                            <input id="primerNombre" type="text" formControlName="primerNombre" pInputText>
+                            <label for="primerNombre">Primer Nombre</label>
+                        </span>
+                    </div>
+                    <div class="p-col p-mt-3">
+                        <span class="p-float-label">
+                            <input id="segundoNombre" type="text" formControlName="segundoNombre" pInputText>
+                            <label for="segundoNombre">Segundo Nombre</label>
+                        </span>
+                    </div>
+                    <div class="p-col p-mt-5">
+                        <span class="p-float-label">
+                            <p-calendar inputId="fechaNacimiento" [(ngModel)]="fechaNacimiento" formControlName="fechaNacimiento" dateFormat="yy-mm-dd"></p-calendar>
+                            <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                        </span>
+                    </div>
+                    <div class="p-col p-mt-5">
+                        <p-button type="submit" label="Confirmar" icon="pi pi-check"></p-button>
+                    </div>
+                    
+                </div>
+            </form>
+        </p-card>
+    </div>
+</div>

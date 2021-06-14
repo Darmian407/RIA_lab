@@ -1,0 +1,24 @@
+<p-table [value]="estudianteService.estudiantes">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Documento</th>
+            <th>Primer Apellido</th>
+            <th>Segundo Apellido</th>
+            <th>Primer Nombre</th>
+            <th>Segundo Nombre</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-estudiante>
+        <tr>
+            <td>{{estudiante.documento}}</td>
+            <td>{{estudiante.primerApellido}}</td>
+            <td>{{estudiante.segundoApellido}}</td>
+            <td>{{estudiante.primerNombre}}</td>
+            <td>{{estudiante.segundoNombre}}</td>
+            <td>{{estudiante.fechaNacimiento}}</td>
+            <td>Botones</td>
+        </tr>
+    </ng-template>
+</p-table>
