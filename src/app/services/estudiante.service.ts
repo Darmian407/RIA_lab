@@ -11,6 +11,8 @@ export class estudianteService {
 
   private URL = 'https://ldgr3.cristianbauza.com/api/Estudiantes';
 
+  public estudiantes: Estudiante[] = [];
+
   constructor(private http: HttpClient) { }
 
   getEstudiantes() {
@@ -23,12 +25,12 @@ export class estudianteService {
 
         let headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Bearer ${token}');
+        headers.append('Authorization', `Bearer ${token}`);
 
-        return this.http.get(this.URL, { headers: headers });
+        return this.http.get<Estudiante[]>(this.URL, { headers: headers });
       }
     }
-    throw new Observable
+    throw Observable;
 
   }
 

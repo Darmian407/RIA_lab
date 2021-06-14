@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Estudiante } from '../model/Estudiante';
+import { estudianteService } from '../services/estudiante.service';
 
 @Component({
   selector: 'app-estudiantes-grid',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EstudiantesGridComponent implements OnInit {
 
-  constructor() { }
+  
+
+  constructor(public estudianteService: estudianteService) { }
 
   ngOnInit(): void {
+    this.getEstudiantes();
   }
 
+  getEstudiantes(){
+    this.estudianteService.getEstudiantes().subscribe(
+      response=> {
+        this.estudianteService.estudiantes = response;
+      
+      },
+      error=>{
+
+      }
+    );
+  }
 }
