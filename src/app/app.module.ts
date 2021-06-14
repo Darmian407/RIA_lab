@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 //Created components
 import { NavbarComponent } from './navbar/navbar.component';
@@ -31,6 +31,18 @@ import { EstudiantesGridComponent } from './estudiantes-grid/estudiantes-grid.co
 import {TableModule} from 'primeng/table';
 
 
+import { CursoComponent } from './curso/curso.component';
+import { CursoService } from './services/curso.service';
+import { CursosTableComponent } from './curso/cursos-table/cursos-table.component';
+import { AuthInterceptor } from './services/auth.interceptor';
+
+import { HomeComponent } from './home/home.component';
+import { MenuProfesorComponent } from './menu-profesor/menu-profesor.component';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import {CarouselModule} from 'primeng/carousel';
+import { CarruselComponent } from './carrusel/carrusel.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +50,12 @@ import {TableModule} from 'primeng/table';
     LoginComponent,
     RegisterComponent,
     EstudianteComponent,
-    EstudiantesGridComponent
+    EstudiantesGridComponent,
+    CursoComponent,
+    CursosTableComponent,
+    HomeComponent,
+    MenuProfesorComponent,
+    CarruselComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,9 +76,17 @@ import {TableModule} from 'primeng/table';
     MessagesModule,
     MessageModule,
     CalendarModule,
-    TableModule
+    TableModule,
+    PanelMenuModule,
+    CarouselModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService,CursoService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
