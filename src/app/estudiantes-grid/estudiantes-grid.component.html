@@ -11,7 +11,7 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-estudiante>
-        <tr *ngFor="let estudiante of estudianteService.estudiantes">
+        <tr>
             <td>{{estudiante.documento}}</td>
             <td>{{estudiante.primerApellido}}</td>
             <td>{{estudiante.segundoApellido}}</td>

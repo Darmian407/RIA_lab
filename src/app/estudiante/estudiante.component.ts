@@ -21,13 +21,12 @@ export class EstudianteComponent implements OnInit {
 
     ngOnSubmit() {
         let estudiante = new Estudiante();
-        estudiante.id = 2;
         estudiante.documento = this.estudianteForm.controls.documento.value;
         estudiante.primerApellido = this.estudianteForm.controls.primerApellido.value;
         estudiante.segundoApellido = this.estudianteForm.controls.segundoApellido.value;
         estudiante.primerNombre = this.estudianteForm.controls.primerNombre.value;
         estudiante.segundoNombre = this.estudianteForm.controls.segundoNombre.value;
-        estudiante.fechaNacimiento = new Date ('2000-06-09T02:20:26.409Z');
+        estudiante.fechaNacimiento = this.estudianteForm.controls.fechaNacimiento.value;;
         
         
         
