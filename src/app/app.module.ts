@@ -25,11 +25,19 @@ import { AuthService } from './services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+
 import { CursoComponent } from './curso/curso.component';
 import { CursoService } from './services/curso.service';
 import { CursosTableComponent } from './curso/cursos-table/cursos-table.component';
 import {TableModule} from 'primeng/table';
 import { AuthInterceptor } from './services/auth.interceptor';
+
+import { HomeComponent } from './home/home.component';
+import { MenuProfesorComponent } from './menu-profesor/menu-profesor.component';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import {CarouselModule} from 'primeng/carousel';
+import { CarruselComponent } from './carrusel/carrusel.component';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +47,9 @@ import { AuthInterceptor } from './services/auth.interceptor';
     RegisterComponent,
     CursoComponent,
     CursosTableComponent
+    HomeComponent,
+    MenuProfesorComponent,
+    CarruselComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +69,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
     ReactiveFormsModule,
     MessagesModule,
     MessageModule,
+    PanelMenuModule,
+    CarouselModule,
     TableModule
   ],
   providers: [AuthService,CursoService,
