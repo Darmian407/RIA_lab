@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Estudiante } from '../../model/Estudiante';
 import { Message } from '../../model/Message';
 import { estudianteService } from '../../services/EstudianteService/estudiante.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-estudiante',
@@ -11,13 +12,13 @@ import { estudianteService } from '../../services/EstudianteService/estudiante.s
 })
 export class EstudianteComponent implements OnInit {
 
-  message: Message | undefined;
+    message: Message | undefined;
 
     public estudianteForm: FormGroup = new FormGroup({});
   
     fechaNacimiento = '';
 
-    constructor(private estudianteService: estudianteService) { }
+    constructor(private estudianteService: estudianteService, private messageService: MessageService) { }
 
     ngOnSubmit() {
         let estudiante = new Estudiante();
@@ -32,18 +33,13 @@ export class EstudianteComponent implements OnInit {
         
         this.estudianteService.postEstudiantes(estudiante).subscribe(
             response => {
-                let msg = new Message();
-                msg.type = 'success';
-                msg.msg = 'Estudiante creado exitosamente';
+                
+                this.estudianteForm.reset;
 
-                this.message = msg;
+                this.messageService.add({severity:'success', summary: 'Success', detail: 'Estudiante creado exitosamente'});
             },
             error => {
-                let msg = new Message();
-                msg.type = 'error';
-                msg.msg = 'Error';
-
-                this.message = msg;
+                this.messageService.add({severity:'error', summary: 'Error', detail: 'Error al crear el estudiante'});
             }
         );
     }

@@ -75,20 +75,7 @@ export class estudianteService {
 
   putEstudiante(estudiante: Estudiante) {
 
-    let auth = localStorage.getItem('auth');
-
-    if (typeof auth === 'string') {
-      let token = JSON.parse(auth).token;
-      if (auth) {
-
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Bearer ${token}');
-
-        return this.http.get(this.URL, { headers: headers });
-      }
-    }
-    throw new Observable
+    return this.http.put(`${this.URL}/${estudiante.id}`, estudiante);
 
   }
 
@@ -104,10 +91,10 @@ export class estudianteService {
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', 'Bearer ${token}');
 
-        return this.http.get(this.URL, { headers: headers });
+        return this.http.delete(`${this.URL}/${idEstudiante}`, { headers: headers });
       }
     }
-    return []
+    throw new Observable
 
   }
 

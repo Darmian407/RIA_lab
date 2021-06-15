@@ -1,24 +1,93 @@
-<p-table [value]="estudianteService.estudiantes">
-    <ng-template pTemplate="header">
-        <tr>
-            <th>Documento</th>
-            <th>Primer Apellido</th>
-            <th>Segundo Apellido</th>
-            <th>Primer Nombre</th>
-            <th>Segundo Nombre</th>
-            <th>Fecha de Nacimiento</th>
-            <th>Acciones</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-estudiante>
-        <tr>
-            <td>{{estudiante.documento}}</td>
-            <td>{{estudiante.primerApellido}}</td>
-            <td>{{estudiante.segundoApellido}}</td>
-            <td>{{estudiante.primerNombre}}</td>
-            <td>{{estudiante.segundoNombre}}</td>
-            <td>{{estudiante.fechaNacimiento}}</td>
-            <td>Botones</td>
-        </tr>
-    </ng-template>
-</p-table>
+<p-card header="Estudiantes" styleClass="p-card-shadow p-p-3 p-mt-3">
+    <p-table [value]="estudianteService.estudiantes">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Documento</th>
+                <th>Primer Apellido</th>
+                <th>Segundo Apellido</th>
+                <th>Primer Nombre</th>
+                <th>Segundo Nombre</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-estudiante>
+            <tr>
+                <td>{{estudiante.documento}}</td>
+                <td>{{estudiante.primerApellido}}</td>
+                <td>{{estudiante.segundoApellido}}</td>
+                <td>{{estudiante.primerNombre}}</td>
+                <td>{{estudiante.segundoNombre}}</td>
+                <td>{{estudiante.fechaNacimiento}}</td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-user-edit"
+                        class="p-button-rounded p-button-warning p-mr-2"
+                        (click)="showEditarEstudianteDialog(estudiante)">
+                    </button>
+                    <button pButton pRipple type="button" icon="pi pi-trash"
+                        class="p-button-rounded p-button-danger p-mr-2" (click)="deleteEstudiante(estudiante.id)">
+                    </button>
+                </td>
+            </tr>
+
+        </ng-template>
+    </p-table>
+</p-card>
+
+<p-dialog header="Editar Estudiante" [(visible)]="displayEditarEstudianteDialog" [breakpoints]="[{'960px': '75vw'}]"
+    [style]="{width: '50vw'}" [baseZIndex]="10000">
+    <form [formGroup]="editarEstudianteForm" (ngSubmit)="ngOnSubmit()">
+        <div class="p-grid p-formgrid p-flex-column p-fluid">
+            <div class="p-col">
+                <p-message *ngIf="!editarEstudianteForm.valid" severity="error" text="Fatan Campos"></p-message>
+                <p-message *ngIf="message" severity="{{message.type}}" text="{{message.msg}}"></p-message>
+            </div>
+            <div class="p-col p-mt-3">
+                <span class="p-float-label">
+                    <input id="documento" type="text" formControlName="documento"
+                    [(ngModel)]="selectedEstudiante.documento"  pInputText>
+                    <label for="documento">Documento</label>
+                </span>
+            </div>
+            <div class="p-col p-mt-3">
+                <span class="p-float-label">
+                    <input id="primerApellido" type="text" formControlName="primerApellido"
+                    [(ngModel)]="selectedEstudiante.primerApellido" pInputText>
+                    <label for="primerApellido">Primer Apellido</label>
+                </span>
+            </div>
+            <div class="p-col p-mt-3">
+                <span class="p-float-label">
+                    <input id="segundoApellido" type="text" formControlName="segundoApellido"
+                    [(ngModel)]="selectedEstudiante.segundoApellido" pInputText>
+                    <label for="segundoApellido">Segundo Apellido</label>
+                </span>
+            </div>
+            <div class="p-col p-mt-3">
+                <span class="p-float-label">
+                    <input id="primerNombre" type="text" formControlName="primerNombre"
+                    [(ngModel)]="selectedEstudiante.primerNombre" pInputText>
+                    <label for="primerNombre">Primer Nombre</label>
+                </span>
+            </div>
+            <div class="p-col p-mt-3">
+                <span class="p-float-label">
+                    <input id="segundoNombre" type="text" formControlName="segundoNombre"
+                    [(ngModel)]= "selectedEstudiante.segundoNombre" pInputText>
+                    <label for="segundoNombre">Segundo Nombre</label>
+                </span>
+            </div>
+            <div class="p-col p-mt-5">
+                <span class="p-float-label">
+                    <p-calendar inputId="fechaNacimiento" [(ngModel)]="fechaNacimiento"
+                        formControlName="fechaNacimiento" dateFormat="yy-mm-dd"></p-calendar>
+                    <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                </span>
+            </div>
+            <div class="p-col p-mt-5">
+                <p-button type="submit" label="Confirmar" icon="pi pi-check"></p-button>
+            </div>
+
+        </div>
+    </form>
+</p-dialog>
