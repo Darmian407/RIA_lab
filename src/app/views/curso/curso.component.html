@@ -24,6 +24,12 @@
                             <input id="programa" type="text" formControlName="programa" pInputText>
                             <label for="programa">Programa</label>
                         </span>
+                    </div> 
+                    <div class="p-col p-mt-3">
+                        <span class="p-float-label">
+                            <p-dropdown formControlName="docentes" id="docentes" [options]="docentes" optionValue="id" optionLabel="userName"></p-dropdown>
+                            <label for="docentes">Docente</label>
+                        </span>
                     </div>
                     <div class="p-col p-mt-5">
                         <p-button type="submit" label="Confirmar" icon="pi pi-check"></p-button>

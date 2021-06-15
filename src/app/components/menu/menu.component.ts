@@ -18,12 +18,18 @@ export class MenuComponent implements OnInit {
       {
         label: 'Cursos',
         icon: 'pi pi-pw pi-book',
-        items: [{
-          label: 'Lista',
-          icon: 'pi pi-fw pi-list',
-        },
-        { label: 'Editar', icon: 'pi pi-fw pi-pencil' },
-        { separator: true },
+        items: [
+          {
+            label: 'Lista',
+            icon: 'pi pi-fw pi-list',
+            routerLink: '/cursos'
+          },
+          {
+            label: 'Editar',
+            icon: 'pi pi-fw pi-pencil',
+            routerLink: '/curso'
+          },
+          { separator: true },
         ]
       },
       // {
@@ -43,10 +49,12 @@ export class MenuComponent implements OnInit {
         items: [{
           label: 'Lista',
           icon: 'pi pi-fw pi-list',
+          url: 'estudiantes',
         },
         {
           label: 'Editar',
-          icon: 'pi pi-fw pi-user-edit'
+          icon: 'pi pi-fw pi-user-edit',
+          url: 'estudiante',
         },
         { separator: true },
         ]

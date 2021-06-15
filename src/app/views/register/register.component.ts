@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
 
     ngOnSubmit() {
         let user = new User();
-        user.username = this.registerForm.controls.username.value;
+        user.userName = this.registerForm.controls.username.value;
         user.password = this.registerForm.controls.password.value;
         user.email = this.registerForm.controls.email.value;
 

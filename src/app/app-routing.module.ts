@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CursoComponent } from './curso/curso.component';
-import { CursosTableComponent } from './curso/cursos-table/cursos-table.component';
+import { CursoComponent } from './views/curso/curso.component';
+import { CursosTableComponent } from './views/cursos-table/cursos-table.component';
 import { EstudianteComponent } from './views/estudiante/estudiante.component';
 import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
 import { EstudiantesGridComponent } from './views/estudiantes-grid/estudiantes-grid.component';
