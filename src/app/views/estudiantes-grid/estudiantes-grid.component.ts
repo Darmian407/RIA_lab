@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Estudiante } from '../model/Estudiante';
-import { estudianteService } from '../services/estudiante.service';
+import { Estudiante } from '../../model/Estudiante';
+import { estudianteService } from '../../services/EstudianteService/estudiante.service';
 
 @Component({
   selector: 'app-estudiantes-grid',
@@ -8,22 +8,20 @@ import { estudianteService } from '../services/estudiante.service';
   styleUrls: ['./estudiantes-grid.component.css']
 })
 export class EstudiantesGridComponent implements OnInit {
-
   
-
   constructor(public estudianteService: estudianteService) { }
 
   ngOnInit(): void {
     this.getEstudiantes();
   }
 
-  getEstudiantes(){
+  getEstudiantes() {
     this.estudianteService.getEstudiantes().subscribe(
-      response=> {
+      response => {
         this.estudianteService.estudiantes = response;
-      
+
       },
-      error=>{
+      error => {
 
       }
     );

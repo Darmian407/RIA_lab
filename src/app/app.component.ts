@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'prime-ng';
+  
+  user: string = '';
+
+    ngOnInit(): void {
+        let name = localStorage.getItem('user');
+
+        if (typeof name === 'string') {
+            this.user = JSON.parse(name);
+        }
+    }
 }

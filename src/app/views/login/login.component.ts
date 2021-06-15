@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Message } from '../model/Message';
-import { User } from '../model/User';
-import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { User } from '../../model/User';
+import { AuthService } from '../../services/Auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -11,11 +12,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-    message: Message | undefined;
-
     public loginForm: FormGroup = new FormGroup({});
 
-    constructor(private auth: AuthService) { }
+    constructor(private auth: AuthService, private messageService: MessageService, private router: Router) { }
 
     ngOnSubmit() {
         let user = new User();
@@ -24,19 +23,15 @@ export class LoginComponent implements OnInit {
         
         this.auth.login(user).subscribe(
             response => {
-                let msg = new Message();
-                msg.type = 'success';
-                msg.msg = 'Login exitoso';
-
-                this.message = msg;
                 localStorage.setItem('auth', JSON.stringify(response));
+                localStorage.setItem('user', JSON.stringify(user.username));
+                
+                this.messageService.add({severity:'success', summary: 'Success', detail: 'Loged in succesfuly!'});
+                
+                window.location.href = '/';
             },
             error => {
-                let msg = new Message();
-                msg.type = 'error';
-                msg.msg = 'Error';
-
-                this.message = msg;
+                this.messageService.add({severity:'error', summary: 'Error', detail: 'Incorrect username or password'});
             }
         );
     }

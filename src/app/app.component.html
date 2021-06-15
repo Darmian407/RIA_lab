@@ -1,1 +1,7 @@
-<app-home></app-home>
+<app-navbar user={{user}}></app-navbar>
+<p-toast></p-toast>
+
+<div class="p-grid">
+    <div class="p-col-12 p-md-3"><app-menu></app-menu></div>
+    <div class="p-col-12 p-md-9"><router-outlet></router-outlet></div>
+</div>

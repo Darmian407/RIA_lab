@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {TableModule} from 'primeng/table';
 import { Observable } from 'rxjs';
 import { Curso } from 'src/app/model/Curso';
-import { CursoService } from 'src/app/services/curso.service';
+import { CursoService } from 'src/app/services/CursoService/curso.service';
 
 @Component({
   selector: 'app-cursos-table',
