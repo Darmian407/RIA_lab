@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Message } from '../model/Message';
-import { User } from '../model/User';
-import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { User } from '../../model/User';
+import { AuthService } from '../../services/Auth/auth.service';
 
 @Component({
     selector: 'app-register',
@@ -11,11 +12,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-    message: Message | undefined;
-
     public registerForm: FormGroup = new FormGroup({});
 
-    constructor(private auth: AuthService) {}
+    constructor(private auth: AuthService, private messageService: MessageService, private router: Router) {}
 
     ngOnSubmit() {
         let user = new User();
@@ -25,18 +24,12 @@ export class RegisterComponent implements OnInit {
 
         this.auth.signUp(user).subscribe(
             response => {
-                let msg = new Message();
-                msg.type = 'success';
-                msg.msg = 'Registro exitoso';
-
-                this.message = msg;
+                this.messageService.add({severity:'success', summary: 'Success', detail: 'User registered succesfuly!'});
+                
+                this.router.navigate(['/login']);
             },
             error => {
-                let msg = new Message();
-                msg.type = 'error';
-                msg.msg = 'Error';
-
-                this.message = msg;
+                this.messageService.add({severity:'error', summary: 'Error', detail: 'Error creating the user'});
             }
         );
     }

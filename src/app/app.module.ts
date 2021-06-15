@@ -6,13 +6,17 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 //Created components
-import { NavbarComponent } from './navbar/navbar.component';
-import { LoginComponent } from './login/login.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { CursoComponent } from './curso/curso.component';
+import { CursosTableComponent } from './curso/cursos-table/cursos-table.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { LoginComponent } from './views/login/login.component';
+import { HomeComponent } from './views/home/home.component';
 
 // PrimeNg Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenubarModule } from 'primeng/menubar';
-import { SharedModule } from 'primeng/api';
+import { MessageService, SharedModule } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -20,28 +24,26 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { DividerModule } from 'primeng/divider';
-import { RegisterComponent } from './register/register.component';
-import { AuthService } from './services/auth.service';
+import { RegisterComponent } from './views/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-import { EstudianteComponent } from './estudiante/estudiante.component';
+import { EstudianteComponent } from './views/estudiante/estudiante.component';
 import { CalendarModule } from 'primeng/calendar';
-import { EstudiantesGridComponent } from './estudiantes-grid/estudiantes-grid.component';
-import {TableModule} from 'primeng/table';
-
-
-import { CursoComponent } from './curso/curso.component';
-import { CursoService } from './services/curso.service';
-import { CursosTableComponent } from './curso/cursos-table/cursos-table.component';
-import { AuthInterceptor } from './services/auth.interceptor';
-
-import { HomeComponent } from './home/home.component';
-import { MenuProfesorComponent } from './menu-profesor/menu-profesor.component';
+import { EstudiantesGridComponent } from './views/estudiantes-grid/estudiantes-grid.component';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import {CarouselModule} from 'primeng/carousel';
-import { CarruselComponent } from './carrusel/carrusel.component';
+import { CarouselModule } from 'primeng/carousel';
+import { CarruselComponent } from './components/carrusel/carrusel.component';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
 
+// Services
+import { AuthService } from './services/Auth/auth.service';
+import { CursoService } from './services/CursoService/curso.service';
+import { EstudianteCursoService } from './services/EstudiantesCursoService/estudiante-curso.service';
+import { AuthInterceptor } from './services/Auth/auth.interceptor';
+import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
 
 @NgModule({
   declarations: [
@@ -54,8 +56,9 @@ import { CarruselComponent } from './carrusel/carrusel.component';
     CursoComponent,
     CursosTableComponent,
     HomeComponent,
-    MenuProfesorComponent,
     CarruselComponent,
+    MenuComponent,
+    EstudiantesCursoComponent
   ],
   imports: [
     BrowserModule,
@@ -77,10 +80,16 @@ import { CarruselComponent } from './carrusel/carrusel.component';
     MessageModule,
     CalendarModule,
     TableModule,
+    ToastModule,
     PanelMenuModule,
     CarouselModule,
+    DropdownModule,
   ],
-  providers: [AuthService,CursoService,
+  providers: [
+    AuthService,
+    CursoService,
+    MessageService,
+    EstudianteCursoService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

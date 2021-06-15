@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuProfesorComponent } from './menu-profesor.component';
+import { EstudiantesCursoComponent } from './estudiantes-curso.component';
 
-describe('MenuProfesorComponent', () => {
-  let component: MenuProfesorComponent;
-  let fixture: ComponentFixture<MenuProfesorComponent>;
+describe('EstudiantesCursoComponent', () => {
+  let component: EstudiantesCursoComponent;
+  let fixture: ComponentFixture<EstudiantesCursoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MenuProfesorComponent ]
+      declarations: [ EstudiantesCursoComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MenuProfesorComponent);
+    fixture = TestBed.createComponent(EstudiantesCursoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

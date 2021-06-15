@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Estudiante } from '../model/Estudiante';
-import { Message } from '../model/Message';
-import { estudianteService } from '../services/estudiante.service';
+import { Estudiante } from '../../model/Estudiante';
+import { Message } from '../../model/Message';
+import { estudianteService } from '../../services/EstudianteService/estudiante.service';
 
 @Component({
   selector: 'app-estudiante',

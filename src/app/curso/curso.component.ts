@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Curso } from '../model/Curso';
 import { Message } from '../model/Message';
-import { CursoService } from '../services/curso.service';
+import { CursoService } from '../services/CursoService/curso.service';
 
 @Component({
   selector: 'app-curso',
