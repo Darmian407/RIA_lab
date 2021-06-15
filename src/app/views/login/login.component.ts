@@ -18,13 +18,13 @@ export class LoginComponent implements OnInit {
 
     ngOnSubmit() {
         let user = new User();
-        user.username = this.loginForm.controls.username.value;
+        user.userName = this.loginForm.controls.username.value;
         user.password = this.loginForm.controls.password.value;
         
         this.auth.login(user).subscribe(
             response => {
                 localStorage.setItem('auth', JSON.stringify(response));
-                localStorage.setItem('user', JSON.stringify(user.username));
+                localStorage.setItem('user', JSON.stringify(user.userName));
                 
                 this.messageService.add({severity:'success', summary: 'Success', detail: 'Loged in succesfuly!'});
                 

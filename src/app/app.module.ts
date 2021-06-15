@@ -7,8 +7,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 //Created components
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { CursoComponent } from './curso/curso.component';
-import { CursosTableComponent } from './curso/cursos-table/cursos-table.component';
+import { CursoComponent } from './views/curso/curso.component';
+import { CursosTableComponent } from './views/cursos-table/cursos-table.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginComponent } from './views/login/login.component';
 import { HomeComponent } from './views/home/home.component';
