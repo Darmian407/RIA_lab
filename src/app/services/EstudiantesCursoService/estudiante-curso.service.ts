@@ -13,7 +13,7 @@ export class EstudianteCursoService {
     constructor(private http: HttpClient) { }
 
     getEstudiantesCurso(cursoId: number) {
-        return this.http.get<EstudianteCurso[]>(this.URL + `?cursoId=${cursoId}`);
+        return this.http.get<EstudianteCurso[]>(this.URL + `/?cursoId=${cursoId}`);
     }
 
     getEstudiantesCursoById(id: number) {
