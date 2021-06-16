@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'estudiantes', component: EstudiantesGridComponent },
   { path: 'curso', component: CursoComponent },
   { path: 'cursos', component: CursosTableComponent },
-  { path: 'estudiantesCurso', component: EstudiantesCursoComponent },
+  { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent },
 ];
 
 @NgModule({

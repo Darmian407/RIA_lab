@@ -37,6 +37,7 @@ import { CarruselComponent } from './components/carrusel/carrusel.component';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 // Services
 import { AuthService } from './services/Auth/auth.service';
@@ -44,6 +45,7 @@ import { CursoService } from './services/CursoService/curso.service';
 import { EstudianteCursoService } from './services/EstudiantesCursoService/estudiante-curso.service';
 import { AuthInterceptor } from './services/Auth/auth.interceptor';
 import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -84,12 +86,14 @@ import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes
     PanelMenuModule,
     CarouselModule,
     DropdownModule,
+    ConfirmDialogModule,
   ],
   providers: [
     AuthService,
     CursoService,
     MessageService,
     EstudianteCursoService,
+    ConfirmationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
