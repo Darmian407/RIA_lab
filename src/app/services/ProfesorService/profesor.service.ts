@@ -32,7 +32,7 @@ export class ProfesorService {
     return users;
   }
 
-  getDocente(idUser: string) {
+  getDocente(idUser: string | undefined) {
     return this.http.get(this.URL + "/" + idUser);
   }
 
