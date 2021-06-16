@@ -31,7 +31,6 @@ export class CursoComponent implements OnInit {
       docentes: new FormControl(''),
   });
     this.docentes = this.docenteService.getDocentes();
-    console.log(this.docentes);
   }
 
   ngOnSubmit(){
