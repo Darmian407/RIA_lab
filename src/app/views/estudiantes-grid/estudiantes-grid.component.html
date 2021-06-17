@@ -18,7 +18,7 @@
                 <td>{{estudiante.segundoApellido}}</td>
                 <td>{{estudiante.primerNombre}}</td>
                 <td>{{estudiante.segundoNombre}}</td>
-                <td>{{estudiante.fechaNacimiento}}</td>
+                <td>{{convertirFecha(estudiante.fechaNacimiento)}}</td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-user-edit"
                         class="p-button-rounded p-button-warning p-mr-2"
@@ -91,3 +91,5 @@
         </div>
     </form>
 </p-dialog>
+
+<p-confirmDialog header="Confirmacion" icon="pi pi-exclamation-triangle"></p-confirmDialog>

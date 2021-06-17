@@ -17,59 +17,19 @@ export class estudianteService {
 
   getEstudiantes() {
 
-    let auth = localStorage.getItem('auth');
-
-    if (typeof auth === 'string') {
-      let token = JSON.parse(auth).token;
-      if (auth) {
-
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', `Bearer ${token}`);
-
-        return this.http.get<Estudiante[]>(this.URL, { headers: headers });
-      }
-    }
-    throw Observable;
+    return this.http.get<Estudiante[]>(this.URL);
 
   }
 
   postEstudiantes(estudiante: Estudiante) {
 
-    let auth = localStorage.getItem('auth');
-
-    console.log(estudiante);
-    if (typeof auth === 'string') {
-      let token = JSON.parse(auth).token;
-      if (token) {
-
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', `Bearer ${token}`);
-
-        return this.http.post(this.URL, estudiante, { headers: headers });
-      }
-    }
-    throw new Observable
+    return this.http.post(this.URL, estudiante);
 
   }
 
   getEstudiante(idEstudiante: string) {
 
-    let auth = localStorage.getItem('auth');
-
-    if (typeof auth === 'string') {
-      let token = JSON.parse(auth).token;
-      if (auth) {
-
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Bearer ${token}');
-
-        return this.http.get(this.URL, { headers: headers });
-      }
-    }
-    return []
+    return this.http.get(`${this.URL}/${idEstudiante}`);
 
   }
 
@@ -81,21 +41,8 @@ export class estudianteService {
 
   deleteEstudiante(idEstudiante: string) {
 
-    let auth = localStorage.getItem('auth');
-
-    if (typeof auth === 'string') {
-      let token = JSON.parse(auth).token;
-      if (auth) {
-
-        let headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Bearer ${token}');
-
-        return this.http.delete(`${this.URL}/${idEstudiante}`, { headers: headers });
-      }
-    }
-    throw new Observable
-
+    return this.http.delete(`${this.URL}/${idEstudiante}`);
+  
   }
 
 

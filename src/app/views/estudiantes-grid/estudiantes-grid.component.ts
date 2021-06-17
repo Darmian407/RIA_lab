@@ -3,7 +3,8 @@ import { Estudiante } from '../../model/Estudiante';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { estudianteService } from '../../services/EstudianteService/estudiante.service';
 import { Message } from '../../model/Message';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-estudiantes-grid',
@@ -14,7 +15,7 @@ export class EstudiantesGridComponent implements OnInit {
 
   message: Message | undefined;
 
-  fechaNacimiento: Date | undefined;
+  fechaNacimiento: Date | undefined | string;
 
   displayEditarEstudianteDialog: boolean = false;
 
@@ -22,8 +23,11 @@ export class EstudiantesGridComponent implements OnInit {
 
   selectedEstudiante: any = {};
 
-
-  constructor(public estudianteService: estudianteService, private messageService: MessageService) { }
+  constructor(
+    public estudianteService: estudianteService, 
+    private messageService: MessageService, 
+    private confirmationService: ConfirmationService,
+    ) { }
 
   ngOnInit(): void {
     this.editarEstudianteForm = new FormGroup({
@@ -72,18 +76,21 @@ export class EstudiantesGridComponent implements OnInit {
     );
   }
 
-  deleteEstudiante(idEstudiante: string) {
-    if (confirm('Seguro de querer eliminar a este estudiante?')) {
+  deleteEstudiante(idEstudiante: string){
+    this.confirmationService.confirm({
+      message: 'Seguro que quieres eliminar este estudiante?',
+      accept: () => {
       this.estudianteService.deleteEstudiante(idEstudiante).subscribe(
-        (response) => {
-          this.getEstudiantes();
-          console.log(response)
-        },
-        (error) => console.error()
+        (response) => 
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Estudiante eliminado exitosamente' }), 
+        (error) => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
       );
-
-    }
+      window.location.reload();
+      },
+      reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Eliminación del Estudiante cancelada' })
+    });
   }
+  
 
   editEstudiante(estudiante: Estudiante){
     
@@ -97,6 +104,12 @@ export class EstudiantesGridComponent implements OnInit {
     }
     this.displayEditarEstudianteDialog = true;    
 
+  }
+
+  convertirFecha(fechaNacimiento : Date){
+
+    return moment(fechaNacimiento).format("DD-MM-YYYY");
+    
   }
 
   

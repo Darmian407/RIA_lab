@@ -20,12 +20,12 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-pw pi-book',
         items: [
           {
-            label: 'Lista',
+            label: 'Listar',
             icon: 'pi pi-fw pi-list',
             routerLink: '/cursos'
           },
           {
-            label: 'Editar',
+            label: 'Agregar',
             icon: 'pi pi-fw pi-pencil',
             routerLink: '/curso'
           },
@@ -52,8 +52,8 @@ export class MenuComponent implements OnInit {
           url: 'estudiantes',
         },
         {
-          label: 'Editar',
-          icon: 'pi pi-fw pi-user-edit',
+          label: 'Agregar',
+          icon: 'pi pi-fw pi-user-plus',
           url: 'estudiante',
         },
         { separator: true },

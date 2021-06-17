@@ -5,7 +5,7 @@ export class Estudiante {
     segundoApellido?: string | undefined;
     primerNombre?: string | undefined;
     segundoNombre?: string | undefined;
-    fechaNacimiento?: Date | undefined;
+    fechaNacimiento?: Date | undefined | string;
     
     constructor() {}
 }
