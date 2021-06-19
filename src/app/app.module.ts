@@ -12,6 +12,7 @@ import { CursosTableComponent } from './views/cursos-table/cursos-table.componen
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginComponent } from './views/login/login.component';
 import { HomeComponent } from './views/home/home.component';
+import { AsistenciaComponent } from './views/asistencia/asistencia.component';
 
 // PrimeNg Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,6 +47,7 @@ import { EstudianteCursoService } from './services/EstudiantesCursoService/estud
 import { AuthInterceptor } from './services/Auth/auth.interceptor';
 import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
 import { ConfirmationService } from 'primeng/api';
+import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-estudiante.service';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { ConfirmationService } from 'primeng/api';
     HomeComponent,
     CarruselComponent,
     MenuComponent,
-    EstudiantesCursoComponent
+    EstudiantesCursoComponent,
+    AsistenciaComponent
   ],
   imports: [
     BrowserModule,
@@ -94,6 +97,7 @@ import { ConfirmationService } from 'primeng/api';
     MessageService,
     EstudianteCursoService,
     ConfirmationService,
+    ClaseEstudianteService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
