@@ -46,6 +46,9 @@ import { EstudianteCursoService } from './services/EstudiantesCursoService/estud
 import { AuthInterceptor } from './services/Auth/auth.interceptor';
 import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
 import { ConfirmationService } from 'primeng/api';
+import { UsuariosGridComponent } from './views/usuarios-grid/usuarios-grid.component';
+import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { AdminGuard } from './services/AdminGuard/admin.guard';
 
 @NgModule({
   declarations: [
@@ -60,7 +63,9 @@ import { ConfirmationService } from 'primeng/api';
     HomeComponent,
     CarruselComponent,
     MenuComponent,
-    EstudiantesCursoComponent
+    EstudiantesCursoComponent,
+    UsuariosGridComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -94,6 +99,7 @@ import { ConfirmationService } from 'primeng/api';
     MessageService,
     EstudianteCursoService,
     ConfirmationService,
+    AdminGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

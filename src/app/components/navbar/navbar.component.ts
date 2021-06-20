@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { ApplicationUser } from 'src/app/model/ApplicationUser';
+import { AuthService } from 'src/app/services/Auth/auth.service';
 
 @Component({
     selector: 'app-navbar',
@@ -11,26 +13,21 @@ export class NavbarComponent implements OnInit {
     items: MenuItem[] = [];
 
     @Input()
-    user: string = '';
+    user: ApplicationUser | undefined;
 
-    constructor() { }
-
-    logout(): void {
-        localStorage.clear();
-        window.location.reload();
-    }
+    constructor(private authService: AuthService) { }
 
     ngOnInit(): void {
         if (this.user) {
             this.items = [
                 {
-                    label: `Welcome ${this.user}`,
+                    label: `Welcome ${this.user.username}`,
                     icon: 'pi pi-user',
                 },
                 {
                     label: 'Logout',
                     icon: 'pi pi-sign-out',
-                    command: this.logout
+                    command: this.authService.logout
                 },
             ];
         } else {

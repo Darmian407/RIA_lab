@@ -1,6 +1,6 @@
 <p-card header="Estudiantes del Curso" [subheader]="curso.nombre ? curso.nombre : '' "
     styleClass="p-card-shadow p-p-3 p-mt-3">
-    <p-table [value]="estudiantesCurso" [scrollLeft]="true" styleClass="p-datatable-gridlines p-datatable-striped">
+    <p-table [value]="estudiantesCurso" [responsive]="true">
         <ng-template pTemplate="header">
             <tr>
                 <th>Id</th>

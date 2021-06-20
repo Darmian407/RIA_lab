@@ -20,20 +20,31 @@ export class LoginComponent implements OnInit {
         let user = new User();
         user.userName = this.loginForm.controls.username.value;
         user.password = this.loginForm.controls.password.value;
-        
+
         this.auth.login(user).subscribe(
             response => {
                 localStorage.setItem('auth', JSON.stringify(response));
-                localStorage.setItem('user', JSON.stringify(user.userName));
+
+                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Loged in succesfuly!' });
+
+                this.auth.getUserInfo().subscribe(
+                    response => {
+                        console.log(response);
+                        localStorage.setItem('user', JSON.stringify(response));
+
+                        this.router.navigateByUrl('/');
+                    },
+                    error => {
+                        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error en el servidor' });
+                    }
+                );
                 
-                this.messageService.add({severity:'success', summary: 'Success', detail: 'Loged in succesfuly!'});
-                
-                window.location.href = '/';
             },
             error => {
-                this.messageService.add({severity:'error', summary: 'Error', detail: 'Incorrect username or password'});
+                this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Incorrect username or password' });
             }
         );
+
     }
 
     ngOnInit(): void {
