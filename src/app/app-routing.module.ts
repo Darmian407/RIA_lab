@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from './services/AdminGuard/admin.guard';
+import { DocenteGuard } from './services/DocenteGuard/docente.guard';
 import { AsistenciaComponent } from './views/asistencia/asistencia.component';
 import { ClaseComponent } from './views/clase/clase.component';
 import { CursoComponent } from './views/curso/curso.component';
@@ -9,7 +11,9 @@ import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes
 import { EstudiantesGridComponent } from './views/estudiantes-grid/estudiantes-grid.component';
 import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
+import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { RegisterComponent } from './views/register/register.component';
+import { UsuariosGridComponent } from './views/usuarios-grid/usuarios-grid.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,10 +22,14 @@ const routes: Routes = [
   { path: 'estudiante', component: EstudianteComponent },
   { path: 'estudiantes', component: EstudiantesGridComponent },
   { path: 'curso', component: CursoComponent },
-  { path: 'cursos', component: CursosTableComponent },
+  { path: 'cursos', component: CursosTableComponent, canActivate: [AdminGuard] },
+  { path: 'miscursos', component: PageNotFoundComponent, canActivate: [DocenteGuard] },
+  { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent, canActivate: [AdminGuard] },
+  { path: 'usuarios', component: UsuariosGridComponent, canActivate: [AdminGuard] },
   { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent },
   { path: 'curso/clases/asistencia/:claseId', component: AsistenciaComponent },
   { path: 'curso/clases/:cursoId', component: ClaseComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

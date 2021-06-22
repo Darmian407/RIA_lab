@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApplicationUser } from './model/ApplicationUser';
 
 @Component({
   selector: 'app-root',
@@ -6,15 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'prime-ng';
-  
-  user: string = '';
+  title = 'Libreta Digital';
 
-    ngOnInit(): void {
-        let name = localStorage.getItem('user');
+  user: ApplicationUser | undefined;
 
-        if (typeof name === 'string') {
-            this.user = JSON.parse(name);
-        }
+  ngOnInit(): void {
+    let usuario = localStorage.getItem('user');
+
+    if (typeof usuario === 'string') {
+      this.user = JSON.parse(usuario);
     }
+  }
 }

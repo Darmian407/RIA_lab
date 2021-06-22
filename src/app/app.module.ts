@@ -48,7 +48,11 @@ import { CursoService } from './services/CursoService/curso.service';
 import { EstudianteCursoService } from './services/EstudiantesCursoService/estudiante-curso.service';
 import { AuthInterceptor } from './services/Auth/auth.interceptor';
 import { ConfirmationService } from 'primeng/api';
+import { UsuariosGridComponent } from './views/usuarios-grid/usuarios-grid.component';
+import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { AdminGuard } from './services/AdminGuard/admin.guard';
 import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-estudiante.service';
+import { DocenteGuard } from './services/DocenteGuard/docente.guard';
 
 
 @NgModule({
@@ -65,6 +69,8 @@ import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-
     CarruselComponent,
     MenuComponent,
     EstudiantesCursoComponent,
+    UsuariosGridComponent,
+    PageNotFoundComponent,
     AsistenciaComponent,
     ClaseComponent,
   ],
@@ -100,6 +106,8 @@ import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-
     MessageService,
     EstudianteCursoService,
     ConfirmationService,
+    AdminGuard,
+    DocenteGuard,
     ClaseEstudianteService,
     {
       provide: HTTP_INTERCEPTORS,
