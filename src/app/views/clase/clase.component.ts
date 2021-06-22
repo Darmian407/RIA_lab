@@ -17,7 +17,7 @@ import * as moment from 'moment';
 })
 export class ClaseComponent implements OnInit {
 
-  curso: Curso = {};
+  cursoId: number | undefined;
 
   clasesCurso: Clase[] = [];
 
@@ -50,8 +50,9 @@ export class ClaseComponent implements OnInit {
     clase.titulo = this.claseForm.controls.titulo.value;
     clase.descripcion = this.claseForm.controls.descripcion.value;
     clase.fecha = this.claseForm.controls.fechaA.value; 
-    clase.cursoId = this.curso.id;
-    
+    clase.cursosId = this.cursoId;
+
+    console.log(clase);
     
     this.claseService.postClases(clase).subscribe(
         response => {
@@ -72,7 +73,9 @@ ngOnInit(): void {
 
     // Route params
     const routeParams = this.route.snapshot.paramMap;
-    const cursoId = Number(routeParams.get('cursoId'));
+    this.cursoId = Number(routeParams.get('cursoId'));
+
+    console.log(this.cursoId);
     
     this.claseForm = new FormGroup({
       titulo: new FormControl('', [Validators.required]),
@@ -86,20 +89,16 @@ ngOnInit(): void {
       fecha: new FormControl('', [Validators.required]),
     });
 
-    // Get datos del curso
-    this.cursosService.getCurso(cursoId.toString()).subscribe(
-      result => {
-        this.curso = result;
-      }
-    );
 
     // Get clases de un curso
-    this.claseService.getClasesCurso(cursoId).subscribe(
+    this.claseService.getClasesCurso(this.cursoId).subscribe(
       result => {
         this.clasesCurso = result;
       }
     );
 }
+
+
 
 ngOnDelete(id: number): void {
   this.confirmationService.confirm({
@@ -120,7 +119,7 @@ ngOnEdit(): void {
   clase.titulo = this.editarClaseForm.controls.titulo.value;
   clase.descripcion = this.editarClaseForm.controls.descripcion.value;
   clase.fecha = this.editarClaseForm.controls.fecha.value; 
-  clase.cursoId = this.curso.id;
+  clase.cursosId = this.cursoId;
   
   
   

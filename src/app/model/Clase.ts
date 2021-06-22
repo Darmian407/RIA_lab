@@ -3,7 +3,7 @@ export class Clase {
     titulo?: string | undefined;
     fecha?: Date | undefined | string;
     descripcion?: string | undefined;
-    cursoId?: number | undefined;
+    cursosId?: number | undefined;
 
     constructor() {}
 }
