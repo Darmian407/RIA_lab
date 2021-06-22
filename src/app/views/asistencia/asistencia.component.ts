@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Clase } from 'src/app/model/Clase';
 import { ClaseEstudiante } from 'src/app/model/ClaseEstudiante';
 import { EstudianteCurso } from 'src/app/model/EstudianteCurso';
 import { ClaseEstudianteService } from 'src/app/services/ClaseEstudainteService/clase-estudiante.service';
+import { clasesService } from 'src/app/services/ClasesService/clases.service';
 import { EstudianteCursoService } from 'src/app/services/EstudiantesCursoService/estudiante-curso.service';
 
 @Component({
@@ -14,14 +16,17 @@ import { EstudianteCursoService } from 'src/app/services/EstudiantesCursoService
 export class AsistenciaComponent implements OnInit {
 
   constructor(
-    private claseEstudianteService: ClaseEstudianteService,
     private route: ActivatedRoute,
+    private claseEstudianteService: ClaseEstudianteService,
     private estudianteCursoService: EstudianteCursoService,
+    private claseService: clasesService,
   ) { }
 
   estudiantes: EstudianteCurso[] = [];
 
-  claseId: number | undefined;
+  claseId: string | null = "";
+
+  public clase: Clase | undefined;
 
   asistencias: any[] = [];
 
@@ -30,24 +35,37 @@ export class AsistenciaComponent implements OnInit {
   ngOnInit(): void {
     // Route params
     const routeParams = this.route.snapshot.paramMap;
-    this.claseId = Number(routeParams.get('claseId'));
-
-    this.estudianteCursoService.getEstudiantesCurso(1).subscribe(
-      response => {
-        this.estudiantes = response;
-      },
-      error => {
-
-      }
-    );
-    this.claseEstudianteService.getClaseEstudiantesClase(this.claseId).subscribe(
-      response => {
-        this.asistenciasGet = response;
-      },
-      error => {
-
-      }
-    );
+    this.claseId = routeParams.get('claseId');
+    
+    if (this.claseId) {
+      this.claseService.getClase(this.claseId).subscribe(
+        response => {
+          this.clase = response; 
+          if (this.clase?.cursosId) {
+            this.estudianteCursoService.getEstudiantesCurso(this.clase?.cursosId).subscribe(
+              response => {
+                this.estudiantes = response;
+              },
+              error => {
+      
+              }
+            );
+          }
+          this.claseEstudianteService.getClaseEstudiantesClase(this.clase?.id).subscribe(
+            response => {
+              this.asistenciasGet = response;
+            },
+            error => {
+      
+            }
+          );
+        },
+        error => {
+         },
+      );
+    }
+   
+    
   }
 
   onCheckboxChange(e: any) {
@@ -65,7 +83,7 @@ export class AsistenciaComponent implements OnInit {
     this.estudiantes.forEach(elem => {
       if (elem.estudiante) {
         let asistencia: ClaseEstudiante = {
-          clasesId: this.claseId,
+          clasesId: this.clase?.id,
           estudiantesId: elem.estudiante.id,
           asiste: this.asistencias.includes(elem.estudiante.id),
         };

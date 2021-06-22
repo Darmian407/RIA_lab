@@ -23,8 +23,11 @@
                     <input type="checkbox" [value]="estudiante_curso.estudiante.id" (change)="onCheckboxChange($event)" />
                 </td>
                 <ng-template #valorAsistencia>
-                    <td>
-                        {{asistio(estudiante_curso.estudiante.id).asiste}}
+                    <td >
+                        <i [ngStyle]="{color:'var(--green-300)'}" *ngIf="asistio(estudiante_curso.estudiante.id).asiste; else cross" class="pi pi-check"></i>
+                        <ng-template #cross>
+                            <i [ngStyle]="{color:'var(--pink-700)'}" class="pi pi-times" ></i>
+                        </ng-template>    
                     </td>
                 </ng-template>
 

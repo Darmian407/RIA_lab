@@ -23,6 +23,10 @@
                         class="p-button-rounded p-button-danger p-mr-2"
                         (click)="ngOnDelete(clases_curso.id)">
                     </button>
+                    <button pButton pRipple type="button" icon="pi pi-check-square"
+                        class="p-button-rounded p-button-help p-mr-2"
+                        [routerLink]="['/curso/clases/asistencia', clases_curso.id]">
+                    </button>
                 </td>
             </tr>
         </ng-template>
