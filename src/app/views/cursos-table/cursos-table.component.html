@@ -16,6 +16,10 @@
                 <td>{{curso.descripcion}}</td>
                 <td>{{curso.programa}}</td>
                 <td>
+                    <button pButton pRipple type="button" icon="pi pi-calendar-plus"
+                        [routerLink]="['/curso/clases', curso.id]"
+                        class="p-button-rounded p-button-primary p-mr-2">
+                    </button>
                     <button pButton pRipple type="button" icon="pi pi-users"
                         [routerLink]="['/curso/estudiantes', curso.id]"
                         class="p-button-rounded p-button-primary p-mr-2">

@@ -13,6 +13,8 @@ import { MenuComponent } from './components/menu/menu.component';
 import { LoginComponent } from './views/login/login.component';
 import { HomeComponent } from './views/home/home.component';
 import { AsistenciaComponent } from './views/asistencia/asistencia.component';
+import { ClaseComponent } from './views/clase/clase.component';
+import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
 
 // PrimeNg Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -45,9 +47,9 @@ import { AuthService } from './services/Auth/auth.service';
 import { CursoService } from './services/CursoService/curso.service';
 import { EstudianteCursoService } from './services/EstudiantesCursoService/estudiante-curso.service';
 import { AuthInterceptor } from './services/Auth/auth.interceptor';
-import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
 import { ConfirmationService } from 'primeng/api';
 import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-estudiante.service';
+
 
 @NgModule({
   declarations: [
@@ -64,6 +66,7 @@ import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-
     MenuComponent,
     EstudiantesCursoComponent,
     AsistenciaComponent
+    ClaseComponent,
   ],
   imports: [
     BrowserModule,
