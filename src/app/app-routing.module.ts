@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'estudiantes', component: EstudiantesGridComponent },
   { path: 'curso', component: CursoComponent },
   { path: 'cursos', component: CursosTableComponent, canActivate: [AdminGuard] },
-  { path: 'miscursos', component: PageNotFoundComponent, canActivate: [DocenteGuard] },
+  { path: 'miscursos', component: CursosTableComponent, canActivate: [DocenteGuard] },
   { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent, canActivate: [AdminGuard] },
   { path: 'usuarios', component: UsuariosGridComponent, canActivate: [AdminGuard] },
   { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent },

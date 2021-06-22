@@ -17,7 +17,7 @@ export class CursoService {
     return this.http.get<Curso[]>(this.URL);
   }
   getMisCursos(){
-    return this.http.get(this.URL + "/Cursos/MisCursos")
+    return this.http.get<Curso[]>(this.URL + "/MisCursos")
   }
   postCurso(curso: Curso) {
     return this.http.post(this.URL, curso);

@@ -16,6 +16,8 @@ import { ProfesorService } from 'src/app/services/ProfesorService/profesor.servi
 })
 export class CursosTableComponent implements OnInit {
 
+  rol: string | undefined;
+  
   public cursos: Curso[] = [];
 
   message: Message | undefined;
@@ -51,14 +53,36 @@ export class CursosTableComponent implements OnInit {
 
 
   getCursos() {
-    this.cursosService.getCursos().subscribe(
-      response => {
-        this.cursos = response;
-      },
-      error => {
-        this.messageService.add({ severity: 'error', summary: 'Info', detail: 'Error interno del sistema' });
-      }
-    );
+
+    let usuario = localStorage.getItem('user');
+
+    if (typeof usuario === 'string') {
+      let user = JSON.parse(usuario);
+      if (user && user.roles) {
+        this.rol = user.roles;
+        if(user.roles.includes("DOCENTE")){
+          this.cursosService.getMisCursos().subscribe(
+            response => {
+              this.cursos = response;
+            },
+            error => {
+              this.messageService.add({ severity: 'error', summary: 'Info', detail: 'Error interno del sistema' });
+            }
+          );
+        };
+        if(user.roles.includes("ADMIN")){
+          this.cursosService.getCursos().subscribe(
+            response => {
+              this.cursos = response;
+            },
+            error => {
+              this.messageService.add({ severity: 'error', summary: 'Info', detail: 'Error interno del sistema' });
+            }
+          );
+        };
+      };
+    }
+    
   }
 
   ngOnSubmit(): void {
