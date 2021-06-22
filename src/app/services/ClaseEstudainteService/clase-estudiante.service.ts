@@ -11,7 +11,7 @@ export class ClaseEstudianteService {
 
   constructor(private http: HttpClient) { }
 
-  getClaseEstudiantesClase(claseId: number) {
+  getClaseEstudiantesClase(claseId: number|undefined) {
     return this.http.get<ClaseEstudiante[]>(this.URL+'/Clase/'+ claseId);
   }
 

@@ -65,7 +65,7 @@ import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-
     CarruselComponent,
     MenuComponent,
     EstudiantesCursoComponent,
-    AsistenciaComponent
+    AsistenciaComponent,
     ClaseComponent,
   ],
   imports: [
