@@ -46,7 +46,7 @@ export class AuthService {
     }
 
     getUserRole(username: string) {
-        return this.http.get<Role>(this.URL + `/users-role?username=${username}`);
+        return this.http.get<Role[]>(this.URL + `/users-role?username=${username}`);
     }
 
     getUserInfo(){

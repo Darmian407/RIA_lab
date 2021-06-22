@@ -21,11 +21,11 @@ export class NavbarComponent implements OnInit {
         if (this.user) {
             this.items = [
                 {
-                    label: `Welcome ${this.user.username}`,
+                    label: `Bienvenido ${this.user.username}`,
                     icon: 'pi pi-user',
                 },
                 {
-                    label: 'Logout',
+                    label: 'Salir',
                     icon: 'pi pi-sign-out',
                     command: this.authService.logout
                 },
@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
         } else {
             this.items = [
                 {
-                    label: 'Login',
+                    label: 'Ingresar',
                     icon: 'pi pi-sign-in',
                     routerLink: ['/login']
                 },
