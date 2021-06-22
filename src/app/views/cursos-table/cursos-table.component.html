@@ -15,11 +15,13 @@
                 <td>{{curso.nombre}}</td>
                 <td>{{curso.descripcion}}</td>
                 <td>{{curso.programa}}</td>
-                <td>
+                <td *ngIf="rol && rol.includes('DOCENTE')">
                     <button pButton pRipple type="button" icon="pi pi-calendar-plus"
                         [routerLink]="['/curso/clases', curso.id]"
                         class="p-button-rounded p-button-primary p-mr-2">
                     </button>
+                </td>
+                <td *ngIf="rol && rol.includes('ADMIN')">      
                     <button pButton pRipple type="button" icon="pi pi-users"
                         [routerLink]="['/curso/estudiantes', curso.id]"
                         class="p-button-rounded p-button-primary p-mr-2">
