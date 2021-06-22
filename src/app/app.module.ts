@@ -12,6 +12,9 @@ import { CursosTableComponent } from './views/cursos-table/cursos-table.componen
 import { MenuComponent } from './components/menu/menu.component';
 import { LoginComponent } from './views/login/login.component';
 import { HomeComponent } from './views/home/home.component';
+import { AsistenciaComponent } from './views/asistencia/asistencia.component';
+import { ClaseComponent } from './views/clase/clase.component';
+import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
 
 // PrimeNg Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,11 +47,13 @@ import { AuthService } from './services/Auth/auth.service';
 import { CursoService } from './services/CursoService/curso.service';
 import { EstudianteCursoService } from './services/EstudiantesCursoService/estudiante-curso.service';
 import { AuthInterceptor } from './services/Auth/auth.interceptor';
-import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
 import { ConfirmationService } from 'primeng/api';
 import { UsuariosGridComponent } from './views/usuarios-grid/usuarios-grid.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { AdminGuard } from './services/AdminGuard/admin.guard';
+import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-estudiante.service';
+import { DocenteGuard } from './services/DocenteGuard/docente.guard';
+
 
 @NgModule({
   declarations: [
@@ -65,7 +70,9 @@ import { AdminGuard } from './services/AdminGuard/admin.guard';
     MenuComponent,
     EstudiantesCursoComponent,
     UsuariosGridComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AsistenciaComponent,
+    ClaseComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,6 +107,8 @@ import { AdminGuard } from './services/AdminGuard/admin.guard';
     EstudianteCursoService,
     ConfirmationService,
     AdminGuard,
+    DocenteGuard,
+    ClaseEstudianteService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

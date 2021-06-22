@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './services/AdminGuard/admin.guard';
 import { DocenteGuard } from './services/DocenteGuard/docente.guard';
+import { AsistenciaComponent } from './views/asistencia/asistencia.component';
+import { ClaseComponent } from './views/clase/clase.component';
 import { CursoComponent } from './views/curso/curso.component';
 import { CursosTableComponent } from './views/cursos-table/cursos-table.component';
 import { EstudianteComponent } from './views/estudiante/estudiante.component';
@@ -24,6 +26,9 @@ const routes: Routes = [
   { path: 'miscursos', component: PageNotFoundComponent, canActivate: [DocenteGuard] },
   { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent, canActivate: [AdminGuard] },
   { path: 'usuarios', component: UsuariosGridComponent, canActivate: [AdminGuard] },
+  { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent },
+  { path: 'curso/clases/asistencia/:claseId', component: AsistenciaComponent },
+  { path: 'curso/clases/:cursoId', component: ClaseComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 
