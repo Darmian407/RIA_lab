@@ -1,4 +1,4 @@
-<p-card header="Estudiantes" styleClass="p-card-shadow p-p-3 p-mt-3">
+<p-card header="Asistencias Estudiantes" styleClass="p-card-shadow p-p-3 p-mt-3">
     <p-table [value]="estudiantes">
         <ng-template pTemplate="header">
             <tr>
@@ -19,20 +19,39 @@
                 <td>{{estudiante_curso.estudiante.segundoNombre}}</td>
                 <td>{{estudiante_curso.estudiante.primerApellido}}</td>
                 <td>{{estudiante_curso.estudiante.segundoApellido}}</td>
-                <td  *ngIf="asistenciasGet.length <= 0;else valorAsistencia" >
-                    <input type="checkbox" [value]="estudiante_curso.estudiante.id" (change)="onCheckboxChange($event)" />
+                <td *ngIf="!asistio(estudiante_curso.estudiante.id);else valorAsistencia">
+                    <input type="checkbox" [value]="estudiante_curso.estudiante.id"
+                        (change)="onCheckboxChange($event)" />
                 </td>
                 <ng-template #valorAsistencia>
-                    <td >
-                        <i [ngStyle]="{color:'var(--green-300)'}" *ngIf="asistio(estudiante_curso.estudiante.id).asiste; else cross" class="pi pi-check"></i>
-                        <ng-template #cross>
-                            <i [ngStyle]="{color:'var(--pink-700)'}" class="pi pi-times" ></i>
-                        </ng-template>    
+                    <td>
+
+                        <button *ngIf="asistio(estudiante_curso.estudiante.id)?.asiste; else cross" 
+                            pButton pRipple type="button" icon="pi pi-check"
+                            class="p-button-rounded p-button-success p-button-outlined p-mr-2">
+                        </button>
+                            <ng-template #cross>
+                                <button pButton pRipple type="button" icon="pi pi-times"
+                                    class="p-button-rounded p-button-danger p-button-outlined p-mr-2">
+                                </button>
+
+                            </ng-template>
+                            <button pButton pRipple type="button" icon="pi pi-pencil"
+                                class="p-button-rounded p-button-warning p-mr-2"
+                                (click)="onEdit(estudiante_curso.estudiante.id)">
+                            </button>
+                            <button pButton pRipple type="button" icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger"
+                                (click)="onDelete(estudiante_curso.estudiante.id)">
+                            </button>
                     </td>
                 </ng-template>
 
             </tr>
         </ng-template>
     </p-table>
-    <p-button *ngIf="asistenciasGet.length <= 0" type="button" label="Confirmar" icon="pi pi-check" (onClick)="onSubmit()"></p-button>
+    <p-button *ngIf="asistenciasGet.length != estudiantes.length" type="button" label="Confirmar" icon="pi pi-check"
+        (onClick)="onSubmit()"></p-button>
 </p-card>
+
+<p-confirmDialog header="Confirmacion" icon="pi pi-exclamation-triangle"></p-confirmDialog>

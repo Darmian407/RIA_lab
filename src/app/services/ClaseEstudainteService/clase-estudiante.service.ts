@@ -24,7 +24,7 @@ export class ClaseEstudianteService {
   }
 
   putClaseEstudiante(claseEstudiante: ClaseEstudiante) {
-    return this.http.put(this.URL, ClaseEstudiante);
+    return this.http.put(this.URL+"/"+claseEstudiante.id, claseEstudiante);
   }
 
   deleteClaseEstudiante(idClaseEstudiante: string) {
