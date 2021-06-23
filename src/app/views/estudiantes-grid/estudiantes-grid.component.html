@@ -1,5 +1,7 @@
 <p-card header="Estudiantes" styleClass="p-card-shadow p-p-3 p-mt-3">
-    <p-table [value]="estudianteService.estudiantes">
+    <p-table [value]="estudianteService.estudiantes" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} entradas"
+    [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
             <tr>
                 <th>Documento</th>

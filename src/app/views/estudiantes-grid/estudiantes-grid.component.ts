@@ -23,6 +23,8 @@ export class EstudiantesGridComponent implements OnInit {
 
   selectedEstudiante: any = {};
 
+
+
   constructor(
     public estudianteService: estudianteService, 
     private messageService: MessageService, 
@@ -39,6 +41,8 @@ export class EstudiantesGridComponent implements OnInit {
       fechaNacimiento: new FormControl('', [Validators.required]),
     });
     this.getEstudiantes();
+
+    
   }
 
   ngOnSubmit(): void {
