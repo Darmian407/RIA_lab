@@ -53,6 +53,7 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { AdminGuard } from './services/AdminGuard/admin.guard';
 import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-estudiante.service';
 import { DocenteGuard } from './services/DocenteGuard/docente.guard';
+import { CalificacionesComponent } from './views/calificaciones/calificaciones.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { DocenteGuard } from './services/DocenteGuard/docente.guard';
     PageNotFoundComponent,
     AsistenciaComponent,
     ClaseComponent,
+    CalificacionesComponent,
   ],
   imports: [
     BrowserModule,
