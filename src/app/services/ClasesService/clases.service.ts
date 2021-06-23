@@ -16,40 +16,27 @@ export class clasesService {
   constructor(private http: HttpClient) { }
 
   getClasesCurso(idCurso: number){
-
     return this.http.get<Clase[]>(`${this.URL}/Cursos/${idCurso}`);
-
   }
 
   getClases() {
-
     return this.http.get<Clase[]>(this.URL);
-
   }
 
   postClases(clase: Clase) {
-
     return this.http.post(this.URL, clase);
-
   }
 
   getClase(idClase: string) {
-
     return this.http.get(`${this.URL}/${idClase}`);
-
   }
 
   putClase(clase: Clase) {
-
     return this.http.put(`${this.URL}/${clase.id}`, clase);
-
   }
 
   deleteClase(idClase: number) {
-
     return this.http.delete(`${this.URL}/${idClase}`);
-  
   }
-
 
 }

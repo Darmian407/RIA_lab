@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './services/AdminGuard/admin.guard';
 import { DocenteGuard } from './services/DocenteGuard/docente.guard';
 import { AsistenciaComponent } from './views/asistencia/asistencia.component';
+import { CalificacionesComponent } from './views/calificaciones/calificaciones.component';
 import { ClaseComponent } from './views/clase/clase.component';
 import { CursoComponent } from './views/curso/curso.component';
 import { CursosTableComponent } from './views/cursos-table/cursos-table.component';
@@ -29,7 +30,10 @@ const routes: Routes = [
   { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent },
   { path: 'curso/clases/asistencia/:claseId', component: AsistenciaComponent },
   { path: 'curso/clases/:cursoId', component: ClaseComponent },
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'curso/calificaciones/:cursoId', component: CalificacionesComponent },
+  { path: '**', component: PageNotFoundComponent },
+  
+  
 ];
 
 @NgModule({

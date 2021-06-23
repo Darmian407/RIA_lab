@@ -20,6 +20,10 @@
                         [routerLink]="['/curso/clases', curso.id]"
                         class="p-button-rounded p-button-primary p-mr-2">
                     </button>
+                    <button pButton pRipple type="button" icon="pi pi-percentage"
+                        [routerLink]="['/curso/calificaciones', curso.id]"
+                        class="p-button-rounded p-button-primary p-mr-2">
+                    </button>
                 </td>
                 <td *ngIf="rol && rol.includes('ADMIN')">      
                     <button pButton pRipple type="button" icon="pi pi-users"
