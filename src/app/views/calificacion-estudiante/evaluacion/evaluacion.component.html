@@ -1,0 +1,68 @@
+<p-card header="Evaluación Estudiantes" styleClass="p-card-shadow p-p-3 p-mt-3">
+    <form [formGroup]="form" (ngSubmit)="ngOnSubmit()">
+        <p-table [value]="estudiantes">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Id</th>
+                    <th>Documento</th>
+                    <th>Primer Nombre</th>
+                    <th>Segundo Nombre</th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
+                    <th>Calificación</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-estudiante_curso>
+                <tr>
+                    <td>{{estudiante_curso.estudiante.id}}</td>
+                    <td>{{estudiante_curso.estudiante.documento}}</td>
+                    <td>{{estudiante_curso.estudiante.primerNombre}}</td>
+                    <td>{{estudiante_curso.estudiante.segundoNombre}}</td>
+                    <td>{{estudiante_curso.estudiante.primerApellido}}</td>
+                    <td>{{estudiante_curso.estudiante.segundoApellido}}</td>
+                    <td>
+                        <div class="p-fluid">
+                            <div class="p-field">
+                                <p-inputNumber
+                                    *ngIf="!calificado(estudiante_curso.estudiante.id); else valorCalificacion"
+                                    [ngModel]="0" [formControlName]="estudiante_curso.estudiante.id" mode="decimal"
+                                    [showButtons]="true" [min]=0 [max]="maxCalificacion">
+                                </p-inputNumber>
+                            </div>
+                        </div>
+                    </td>
+                    <ng-template #valorCalificacion>
+                        <td>
+                            <div class="p-grid p-ai-center vertical-container">
+                                <div class="p-col">
+                                    <div class="box">
+                                        {{calificado(estudiante_curso.estudiante.id).nota}}
+                                    </div>
+                                </div>
+                                <div class="p-col">
+
+                                    <button pButton pRipple type="button" icon="pi pi-trash"
+                                        class="p-button-rounded p-button-danger"
+                                        (click)="onDelete(estudiante_curso.estudiante.id)">
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <!--
+                            <button pButton pRipple type="button" icon="pi pi-pencil"
+                                class="p-button-rounded p-button-warning p-mr-2"
+                                (click)="onEdit(estudiante_curso.estudiante.id)">
+                            </button>
+                            -->
+                        </td>
+                    </ng-template>
+
+                </tr>
+            </ng-template>
+        </p-table>
+        <p-button type="submit" label="Confirmar" icon="pi pi-check"></p-button>
+    </form>
+</p-card>
+
+<p-confirmDialog header="Confirmacion" icon="pi pi-exclamation-triangle"></p-confirmDialog>

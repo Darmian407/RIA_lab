@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './services/AdminGuard/admin.guard';
 import { DocenteGuard } from './services/DocenteGuard/docente.guard';
 import { AsistenciaComponent } from './views/asistencia/asistencia.component';
+import { EvaluacionComponent } from './views/calificacion-estudiante/evaluacion/evaluacion.component';
 import { CalificacionesComponent } from './views/calificaciones/calificaciones.component';
 import { ClaseComponent } from './views/clase/clase.component';
 import { CursoComponent } from './views/curso/curso.component';
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'curso/clases/asistencia/:claseId', component: AsistenciaComponent },
   { path: 'curso/clases/:cursoId', component: ClaseComponent },
   { path: 'curso/calificaciones/:cursoId', component: CalificacionesComponent },
+  { path: 'curso/calificaciones/evaluacion/:calificacionId', component: EvaluacionComponent },
   { path: '**', component: PageNotFoundComponent },
   
   

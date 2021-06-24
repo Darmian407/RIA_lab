@@ -20,7 +20,7 @@ export class calificacionesService {
   }
 
   getCalificaciones(id: number) {
-    return this.http.get<Calificacion[]>(`${this.URL}/${id}`);
+    return this.http.get<Calificacion>(`${this.URL}/${id}`);
   }
 
   putCalificaciones(calificacion: Calificacion) {
