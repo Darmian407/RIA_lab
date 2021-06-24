@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     if (this.roles) {
       if (this.roles.includes("ADMIN")) {
-        this.items = [
+        this.items.push(
           {
             label: 'Cursos',
             icon: 'pi pi-pw pi-book',
@@ -65,22 +65,24 @@ export class MenuComponent implements OnInit {
             { separator: true },
             ]
           }
-        ];
-      } else {
-        this.items = [
+        );
+      }
+
+      if (this.roles.includes("DOCENTE")) {
+        this.items.push(
           {
             label: 'Cursos',
             icon: 'pi pi-pw pi-book',
             items: [
               {
-                label: 'Listar',
+                label: 'Mis Cursos',
                 icon: 'pi pi-fw pi-list',
                 routerLink: '/miscursos'
               },
               { separator: true },
             ]
           },
-        ];
+        );
       }
     }
   }

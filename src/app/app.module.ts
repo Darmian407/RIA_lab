@@ -41,6 +41,7 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
 
 // Services
 import { AuthService } from './services/Auth/auth.service';
@@ -53,6 +54,7 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { AdminGuard } from './services/AdminGuard/admin.guard';
 import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-estudiante.service';
 import { DocenteGuard } from './services/DocenteGuard/docente.guard';
+import { CalificacionesComponent } from './views/calificaciones/calificaciones.component';
 
 
 @NgModule({
@@ -73,6 +75,7 @@ import { DocenteGuard } from './services/DocenteGuard/docente.guard';
     PageNotFoundComponent,
     AsistenciaComponent,
     ClaseComponent,
+    CalificacionesComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,6 +102,7 @@ import { DocenteGuard } from './services/DocenteGuard/docente.guard';
     CarouselModule,
     DropdownModule,
     ConfirmDialogModule,
+    VirtualScrollerModule,
   ],
   providers: [
     AuthService,

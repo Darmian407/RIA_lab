@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
                         console.log(response);
                         localStorage.setItem('user', JSON.stringify(response));
 
-                        this.router.navigateByUrl('/');
+                        window.location.href = '/';
                     },
                     error => {
                         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error en el servidor' });

@@ -5,6 +5,8 @@ export class ApplicationUser {
 
     username?: string
 
+    userName?: string
+
     normalizedUserName?: string
 
     email?: string
