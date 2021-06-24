@@ -41,6 +41,7 @@ import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
 
 // Services
 import { AuthService } from './services/Auth/auth.service';
@@ -99,6 +100,7 @@ import { DocenteGuard } from './services/DocenteGuard/docente.guard';
     CarouselModule,
     DropdownModule,
     ConfirmDialogModule,
+    VirtualScrollerModule,
   ],
   providers: [
     AuthService,

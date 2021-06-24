@@ -30,7 +30,7 @@ export class AuthService {
     }
 
     getRoles() {
-        return this.http.get<Role[]>(this.URL + '/roles');
+        return this.http.get<string[]>(this.URL + '/roles');
     }
 
     postRole(role: Role) {
@@ -46,7 +46,7 @@ export class AuthService {
     }
 
     getUserRole(username: string) {
-        return this.http.get<Role[]>(this.URL + `/users-role?username=${username}`);
+        return this.http.get<string[]>(this.URL + `/users-role?username=${username}`);
     }
 
     getUserInfo(){
