@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Clase } from 'src/app/model/Clase';
 import { ClaseEstudiante } from 'src/app/model/ClaseEstudiante';
 import { EstudianteCurso } from 'src/app/model/EstudianteCurso';
@@ -16,10 +17,12 @@ import { EstudianteCursoService } from 'src/app/services/EstudiantesCursoService
 export class AsistenciaComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute,
     private claseEstudianteService: ClaseEstudianteService,
     private estudianteCursoService: EstudianteCursoService,
     private claseService: clasesService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private route: ActivatedRoute,
   ) { }
 
   estudiantes: EstudianteCurso[] = [];
@@ -81,7 +84,7 @@ export class AsistenciaComponent implements OnInit {
   onSubmit() {
     let asistenciasaaa: ClaseEstudiante[] = [];
     this.estudiantes.forEach(elem => {
-      if (elem.estudiante) {
+      if (elem.estudiante &&elem.estudiante.id && !this.asistio(elem.estudiante.id)) {
         let asistencia: ClaseEstudiante = {
           clasesId: this.clase?.id,
           estudiantesId: elem.estudiante.id,
@@ -89,22 +92,48 @@ export class AsistenciaComponent implements OnInit {
         };
         this.claseEstudianteService.postClaseEstudiante(asistencia).subscribe(
           response => {
-            console.log(response);
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia pasada correctamente' });
           },
           error => {
-            console.log(error);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
 
           }
         );
-        asistenciasaaa.push(asistencia);
+          
       }
     })
-    console.log(this.asistencias);
-    console.log(asistenciasaaa);
-
   }
 
-  asistio(idEstudiante: number): ClaseEstudiante {
+  asistio(idEstudiante: number): ClaseEstudiante | undefined {
     return this.asistenciasGet.find(asistencia => asistencia.estudiante.id === idEstudiante);
+  }
+
+  onEdit(idEstudiante: number){
+    this.confirmationService.confirm({
+      message: 'Seguro que quiere cambiar la asistencia?',
+      accept: () => {
+        let asistencia = this.asistenciasGet.find(asistencia => asistencia.estudiante.id === idEstudiante);
+        asistencia.asiste = !asistencia.asiste;
+        this.claseEstudianteService.putClaseEstudiante(asistencia).subscribe(
+          result => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia editada exitosamente' }),
+          error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error }) 
+        );
+      },
+      reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Edicion de la asistencia cancelada' })
+    });
+  }
+
+  onDelete(idEstudiante: number){
+    this.confirmationService.confirm({
+      message: 'Seguro que quiere eliminar la asistencia?',
+      accept: () => {
+        let asistencia = this.asistenciasGet.find(asistencia => asistencia.estudiante.id === idEstudiante);
+        this.claseEstudianteService.deleteClaseEstudiante(asistencia.id).subscribe(
+          result => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia eliminada exitosamente' }),
+          error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error }) 
+        );
+      },
+      reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Eliminación de la asistencia cancelada' })
+    });
   }
 }

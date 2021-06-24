@@ -85,22 +85,22 @@ export class CursosTableComponent implements OnInit {
     
   }
 
-  ngOnSubmit(): void {
-    let curso = new Curso();
-    curso.nombre = this.editarCursoForm.controls.nombre.value;
-    curso.descripcion = this.editarCursoForm.controls.descripcion.value;
-    curso.programa = this.editarCursoForm.controls.programa.value;
-    curso.userId = this.editarCursoForm.controls.docentes.value;
+  ngOnSubmitEdit(): void {
+    
+    this.selectedCurso.nombre = this.editarCursoForm.controls.nombre.value;
+    this.selectedCurso.descripcion = this.editarCursoForm.controls.descripcion.value;
+    this.selectedCurso.programa = this.editarCursoForm.controls.programa.value;
+    this.selectedCurso.userId = this.editarCursoForm.controls.docentes.value;
     
     
     
-    this.cursosService.putCurso(curso).subscribe(
+    this.cursosService.putCurso(this.selectedCurso).subscribe(
         response => {
           this.getCursos();
-          this.messageService.add({severity:'success', summary: 'Success', detail: 'Estudiante modificado exitosamente'});
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'Curso modificado exitosamente'});
         },
         error => {
-          this.messageService.add({severity:'error', summary: 'Error', detail: 'Error al modificar el estudiante'});
+          this.messageService.add({severity:'error', summary: 'Error', detail: 'Error al modificar el Curso'});
         }
     );
 }

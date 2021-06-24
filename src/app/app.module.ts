@@ -42,6 +42,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import {InputNumberModule} from 'primeng/inputnumber';
 
 // Services
 import { AuthService } from './services/Auth/auth.service';
@@ -55,6 +56,7 @@ import { AdminGuard } from './services/AdminGuard/admin.guard';
 import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-estudiante.service';
 import { DocenteGuard } from './services/DocenteGuard/docente.guard';
 import { CalificacionesComponent } from './views/calificaciones/calificaciones.component';
+import { EvaluacionComponent } from './views/calificacion-estudiante/evaluacion/evaluacion.component';
 
 
 @NgModule({
@@ -76,6 +78,7 @@ import { CalificacionesComponent } from './views/calificaciones/calificaciones.c
     AsistenciaComponent,
     ClaseComponent,
     CalificacionesComponent,
+    EvaluacionComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +106,7 @@ import { CalificacionesComponent } from './views/calificaciones/calificaciones.c
     DropdownModule,
     ConfirmDialogModule,
     VirtualScrollerModule,
+    InputNumberModule,
   ],
   providers: [
     AuthService,

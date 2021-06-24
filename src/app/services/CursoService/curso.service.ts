@@ -26,7 +26,7 @@ export class CursoService {
     return this.http.get(this.URL + "/" + idCurso);
   }
   putCurso(curso: Curso) {
-    return this.http.put(this.URL, curso);
+    return this.http.put(this.URL+"/"+curso.id, curso);
   }
 
   deleteCurso(idCurso: string) {
