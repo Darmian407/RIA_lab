@@ -14,6 +14,7 @@ import { ClaseEstudianteService } from 'src/app/services/ClaseEstudainteService/
 import { clasesService } from 'src/app/services/ClasesService/clases.service';
 import { EstudianteCursoService } from 'src/app/services/EstudiantesCursoService/estudiante-curso.service';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { Estudiante } from 'src/app/model/Estudiante';
 
 @Component({
   selector: 'app-evaluacion',
@@ -21,6 +22,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
   styleUrls: ['./evaluacion.component.css']
 })
 export class EvaluacionComponent implements OnInit {
+
+  public clonedCalificaciones: CalificacionEstudiante[]= [];
 
   constructor(
     private estudianteCursoService: EstudianteCursoService,
@@ -87,13 +90,13 @@ export class EvaluacionComponent implements OnInit {
     }
   }
 
-  calificado(idEstudiante: number) {
+  calificado(idEstudiante: number| undefined) {
     return this.calificacionesGet.find(elem => elem.estudiante.id === idEstudiante)
   }
 
   ngOnSubmit() {
     this.estudiantes.forEach(elem => {
-      if (elem.estudiante?.id&&!this.calificado(elem.estudiante.id)) {
+      if (elem.estudiante?.id && !this.calificado(elem.estudiante.id)) {
 
         let control = this.form.get(elem.estudiante?.id?.toString())
         console.log(control?.value);
@@ -112,27 +115,33 @@ export class EvaluacionComponent implements OnInit {
           }
         )
 
-      
+
 
       }
     });
   }
 
+  onRowEditInit(estudiante: Estudiante, index: number) {
+    this.clonedCalificaciones[index] = { ...this.calificado(estudiante.id) };
+    console.log(this.clonedCalificaciones);
+  }
 
-  // onEdit(idEstudiante: number){
-  //   this.confirmationService.confirm({
-  //     message: 'Seguro que quiere cambiar la asistencia?',
-  //     accept: () => {
-  //       let asistencia = this.asistenciasGet.find(asistencia => asistencia.estudiante.id === idEstudiante);
-  //       asistencia.asiste = !asistencia.asiste;
-  //       this.claseEstudianteService.putClaseEstudiante(asistencia).subscribe(
-  //         result => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia editada exitosamente' }),
-  //         error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error }) 
-  //       );
-  //     },
-  //     reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Edicion de la asistencia cancelada' })
-  //   });
-  // }
+  onRowEditSave(estudiante: Estudiante, index: number) {
+      delete this.clonedCalificaciones[index];
+      this.calificacionEstudianteService.putCalificacionEstudiante(this.calificado(estudiante.id)).subscribe(
+        response => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificacion editada exitosamente' });
+        },
+        error => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al editar califiaciones' });
+        }
+      )
+  }
+
+  onRowEditCancel(index: number) {
+    this.calificacionesGet[index] = this.clonedCalificaciones[index];
+    delete this.clonedCalificaciones[index];
+  }
 
   onDelete(idEstudiante: number) {
     this.confirmationService.confirm({
