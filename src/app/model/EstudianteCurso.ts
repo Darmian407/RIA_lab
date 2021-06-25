@@ -1,3 +1,4 @@
+import { Curso } from "./Curso";
 import { Estudiante } from "./Estudiante";
 
 export class EstudianteCurso {
@@ -5,4 +6,5 @@ export class EstudianteCurso {
     cursoId: number | undefined;
     estudianteId: number | undefined;
     estudiante: Estudiante | undefined;
+    curso: Curso | undefined;
 }

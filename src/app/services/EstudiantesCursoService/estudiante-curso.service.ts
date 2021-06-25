@@ -1,30 +1,34 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Curso } from 'src/app/model/Curso';
 import { EstudianteCurso } from 'src/app/model/EstudianteCurso';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class EstudianteCursoService {
+  private URL = 'https://ldgr3.cristianbauza.com/api/EstudiantesCursos';
 
-    private URL = 'https://ldgr3.cristianbauza.com/api/EstudiantesCursos';
+  constructor(private http: HttpClient) {}
 
-    constructor(private http: HttpClient) { }
+  getEstudiantesCurso(cursoId: number) {
+    return this.http.get<EstudianteCurso[]>(this.URL + `/?cursoId=${cursoId}`);
+  }
 
-    getEstudiantesCurso(cursoId: number) {
-        return this.http.get<EstudianteCurso[]>(this.URL + `/?cursoId=${cursoId}`);
-    }
+  getEstudiantesCursoById(id: number) {
+    return this.http.get<EstudianteCurso>(this.URL + `/${id}`);
+  }
 
-    getEstudiantesCursoById(id: number) {
-        return this.http.get<EstudianteCurso>(this.URL + `/${id}`);
-    }
+  getCursosEstudiante(id: number) {
+    return this.http.get<EstudianteCurso[]>(this.URL + `/Estudiante?estudianteId=${id}`);
+  }
 
-    deleteEstudiantesCursoById(id: number) {
-        return this.http.delete(this.URL + `/${id}`);
-    }
+  deleteEstudiantesCursoById(id: number) {
+    return this.http.delete(this.URL + `/${id}`);
+  }
 
-    postEstudiantesCurso(data: EstudianteCurso) {
-        return this.http.post(this.URL, data);
-    }
+  postEstudiantesCurso(data: EstudianteCurso) {
+    return this.http.post(this.URL, data);
+  }
 }

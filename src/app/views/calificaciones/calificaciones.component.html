@@ -21,6 +21,10 @@
                         class="p-button-rounded p-button-danger p-mr-2"
                         (click)="ngOnDelete(calificaciones_curso.id)">
                     </button>
+                    <button pButton pRipple type="button" icon="pi pi-check-square"
+                        class="p-button-rounded p-button-primary p-mr-2"
+                        [routerLink]="'/curso/calificaciones/evaluacion/' + calificaciones_curso.id">
+                    </button>
                 </td>
             </tr>
         </ng-template>

@@ -42,7 +42,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
-import {InputNumberModule} from 'primeng/inputnumber';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 // Services
 import { AuthService } from './services/Auth/auth.service';
@@ -57,7 +57,7 @@ import { ClaseEstudianteService } from './services/ClaseEstudainteService/clase-
 import { DocenteGuard } from './services/DocenteGuard/docente.guard';
 import { CalificacionesComponent } from './views/calificaciones/calificaciones.component';
 import { EvaluacionComponent } from './views/calificacion-estudiante/evaluacion/evaluacion.component';
-
+import { UserAdminGuard } from './services/UserAdminGuard/user-admin.guard';
 
 @NgModule({
   declarations: [
@@ -115,14 +115,15 @@ import { EvaluacionComponent } from './views/calificacion-estudiante/evaluacion/
     EstudianteCursoService,
     ConfirmationService,
     AdminGuard,
+    UserAdminGuard,
     DocenteGuard,
     ClaseEstudianteService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

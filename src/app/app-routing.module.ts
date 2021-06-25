@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './services/AdminGuard/admin.guard';
 import { DocenteGuard } from './services/DocenteGuard/docente.guard';
+import { UserAdminGuard } from './services/UserAdminGuard/user-admin.guard';
 import { AsistenciaComponent } from './views/asistencia/asistencia.component';
 import { EvaluacionComponent } from './views/calificacion-estudiante/evaluacion/evaluacion.component';
 import { CalificacionesComponent } from './views/calificaciones/calificaciones.component';
@@ -24,22 +25,57 @@ const routes: Routes = [
   { path: 'estudiante', component: EstudianteComponent },
   { path: 'estudiantes', component: EstudiantesGridComponent },
   { path: 'curso', component: CursoComponent },
-  { path: 'cursos', component: CursosTableComponent, canActivate: [AdminGuard] },
-  { path: 'miscursos', component: CursosTableComponent, canActivate: [DocenteGuard] },
-  { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent, canActivate: [AdminGuard] },
-  { path: 'usuarios', component: UsuariosGridComponent, canActivate: [AdminGuard] },
+  {
+    path: 'cursos',
+    component: CursosTableComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'miscursos',
+    component: CursosTableComponent,
+    canActivate: [DocenteGuard],
+  },
+  {
+    path: 'curso/estudiantes/:cursoId',
+    component: EstudiantesCursoComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'usuarios',
+    component: UsuariosGridComponent,
+    canActivate: [UserAdminGuard],
+  },
+  {
+    path: 'cursos/estudiante/:id',
+    component: CursosTableComponent,
+    canActivate: [],
+  },
   { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent },
-  { path: 'curso/clases/asistencia/:claseId', component: AsistenciaComponent },
-  { path: 'curso/clases/:cursoId', component: ClaseComponent },
-  { path: 'curso/calificaciones/:cursoId', component: CalificacionesComponent },
-  { path: 'curso/calificaciones/evaluacion/:calificacionId', component: EvaluacionComponent },
+  {
+    path: 'curso/clases/asistencia/:claseId',
+    component: AsistenciaComponent,
+    canActivate: [DocenteGuard],
+  },
+  {
+    path: 'curso/clases/:cursoId',
+    component: ClaseComponent,
+    canActivate: [DocenteGuard],
+  },
+  {
+    path: 'curso/calificaciones/:cursoId',
+    component: CalificacionesComponent,
+    canActivate: [DocenteGuard],
+  },
+  {
+    path: 'curso/calificaciones/evaluacion/:calificacionId',
+    component: EvaluacionComponent,
+    canActivate: [DocenteGuard],
+  },
   { path: '**', component: PageNotFoundComponent },
-  
-  
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
