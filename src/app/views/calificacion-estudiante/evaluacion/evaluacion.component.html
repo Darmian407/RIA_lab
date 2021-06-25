@@ -1,6 +1,6 @@
 <p-card header="Evaluación Estudiantes" styleClass="p-card-shadow p-p-3 p-mt-3">
     <form [formGroup]="form" (ngSubmit)="ngOnSubmit()">
-        <p-table [value]="estudiantes">
+        <p-table [value]="estudiantes" dataKey="id" editMode="row">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Id</th>
@@ -12,8 +12,8 @@
                     <th>Calificación</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-estudiante_curso>
-                <tr>
+            <ng-template pTemplate="body" let-estudiante_curso let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="estudiante_curso">
                     <td>{{estudiante_curso.estudiante.id}}</td>
                     <td>{{estudiante_curso.estudiante.documento}}</td>
                     <td>{{estudiante_curso.estudiante.primerNombre}}</td>
@@ -33,12 +33,32 @@
                     </td>
                     <ng-template #valorCalificacion>
                         <td>
+
+
                             <div class="p-grid p-ai-center vertical-container">
                                 <div class="p-col">
                                     <div class="box">
-                                        {{calificado(estudiante_curso.estudiante.id).nota}}
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text"
+                                                    [(ngModel)]="calificado(estudiante_curso.estudiante.id).nota"
+                                                    [ngModelOptions]="{standalone: true}">
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{calificado(estudiante_curso.estudiante.id).nota}}
+                                            </ng-template>
+                                        </p-cellEditor>
                                     </div>
                                 </div>
+                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                    icon="pi pi-pencil" 
+                                    class="p-button-rounded p-button-warning" (click)="onRowEditInit(estudiante_curso.estudiante, ri)"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                    icon="pi pi-check" (click)="onRowEditSave(estudiante_curso.estudiante,ri)"
+                                    class="p-button-rounded p-button-text p-button-success"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                    icon="pi pi-times" (click)="onRowEditCancel(ri)"
+                                    class="p-button-rounded p-button-text p-button-danger"></button>
                                 <div class="p-col">
 
                                     <button pButton pRipple type="button" icon="pi pi-trash"
