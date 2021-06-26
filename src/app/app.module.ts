@@ -43,6 +43,7 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ChartModule } from 'primeng/chart';
 
 // Services
 import { AuthService } from './services/Auth/auth.service';
@@ -58,6 +59,7 @@ import { DocenteGuard } from './services/DocenteGuard/docente.guard';
 import { CalificacionesComponent } from './views/calificaciones/calificaciones.component';
 import { EvaluacionComponent } from './views/calificacion-estudiante/evaluacion/evaluacion.component';
 import { UserAdminGuard } from './services/UserAdminGuard/user-admin.guard';
+import { EstadisticasCursoComponent } from './views/estadisticas-curso/estadisticas-curso.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,7 @@ import { UserAdminGuard } from './services/UserAdminGuard/user-admin.guard';
     ClaseComponent,
     CalificacionesComponent,
     EvaluacionComponent,
+    EstadisticasCursoComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,6 +110,7 @@ import { UserAdminGuard } from './services/UserAdminGuard/user-admin.guard';
     ConfirmDialogModule,
     VirtualScrollerModule,
     InputNumberModule,
+    ChartModule,
   ],
   providers: [
     AuthService,

@@ -9,6 +9,7 @@ import { CalificacionesComponent } from './views/calificaciones/calificaciones.c
 import { ClaseComponent } from './views/clase/clase.component';
 import { CursoComponent } from './views/curso/curso.component';
 import { CursosTableComponent } from './views/cursos-table/cursos-table.component';
+import { EstadisticasCursoComponent } from './views/estadisticas-curso/estadisticas-curso.component';
 import { EstudianteComponent } from './views/estudiante/estudiante.component';
 import { EstudiantesCursoComponent } from './views/estudiantes-curso/estudiantes-curso.component';
 import { EstudiantesGridComponent } from './views/estudiantes-grid/estudiantes-grid.component';
@@ -28,17 +29,14 @@ const routes: Routes = [
   {
     path: 'cursos',
     component: CursosTableComponent,
-    canActivate: [AdminGuard],
   },
   {
     path: 'miscursos',
     component: CursosTableComponent,
-    canActivate: [DocenteGuard],
   },
   {
     path: 'curso/estudiantes/:cursoId',
     component: EstudiantesCursoComponent,
-    canActivate: [AdminGuard],
   },
   {
     path: 'usuarios',
@@ -48,28 +46,28 @@ const routes: Routes = [
   {
     path: 'cursos/estudiante/:id',
     component: CursosTableComponent,
-    canActivate: [],
   },
   { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent },
   {
     path: 'curso/clases/asistencia/:claseId',
     component: AsistenciaComponent,
-    canActivate: [DocenteGuard],
   },
   {
     path: 'curso/clases/:cursoId',
     component: ClaseComponent,
-    canActivate: [DocenteGuard],
   },
   {
     path: 'curso/calificaciones/:cursoId',
     component: CalificacionesComponent,
-    canActivate: [DocenteGuard],
   },
   {
     path: 'curso/calificaciones/evaluacion/:calificacionId',
     component: EvaluacionComponent,
-    canActivate: [DocenteGuard],
+  },
+  {
+    path: 'curso/estadisticas/:id',
+    component: EstadisticasCursoComponent,
+    canActivate: [DocenteGuard]
   },
   { path: '**', component: PageNotFoundComponent },
 ];
