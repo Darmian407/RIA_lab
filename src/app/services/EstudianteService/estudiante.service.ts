@@ -11,7 +11,7 @@ export class estudianteService {
 
   private URL = 'https://ldgr3.cristianbauza.com/api/Estudiantes';
 
-  public estudiantes: Estudiante[] = [];
+  public estudiantes: any;
 
   constructor(private http: HttpClient) { }
 
@@ -21,6 +21,10 @@ export class estudianteService {
 
   }
 
+  getEstudiantesPaging(index: number,nombre:string,apellido:string,cedula:string){
+    return this.http.get<{lista: Estudiante[], size: number}>(`${this.URL}/api/Estudiantes/Paging?size=10&index=${index}${nombre}${apellido}${cedula}`);
+  }
+  
   postEstudiantes(estudiante: Estudiante) {
 
     return this.http.post(this.URL, estudiante);
