@@ -26,7 +26,7 @@
                                 <p-inputNumber
                                     *ngIf="!calificado(estudiante_curso.estudiante.id); else valorCalificacion"
                                     [ngModel]="0" [formControlName]="estudiante_curso.estudiante.id" mode="decimal"
-                                    [showButtons]="true" [min]=0 [max]="maxCalificacion">
+                                    [showButtons]="true" [min]=1 [max]="maxCalificacion">
                                 </p-inputNumber>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                                             <ng-template pTemplate="input">
                                                 <p-inputNumber 
                                                     [(ngModel)]="calificado(estudiante_curso.estudiante.id).nota"
-                                                    [ngModelOptions]="{standalone: true}" [min]=0 [max]="maxCalificacion" mode="decimal">
+                                                    [ngModelOptions]="{standalone: true}" [min]=1 [max]="maxCalificacion" mode="decimal">
                                                 </p-inputNumber>
                                             </ng-template>
                                             <ng-template pTemplate="output">

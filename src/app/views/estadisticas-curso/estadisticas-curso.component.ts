@@ -14,19 +14,14 @@ import { EstadisticasService } from 'src/app/services/Estadisticas/estadisticas.
 export class EstadisticasCursoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private claseEstudianteService: ClaseEstudianteService,
-    private claseService: clasesService,
     private estadisticasService: EstadisticasService
-  ) {}
+  ) { }
 
   cursoId: any;
   dataAsistencia: any;
   dataCalificaciones: any;
   optionsAsistencia: any;
   optionsCalificaciones: any;
-
-  asiste = 0;
-  noAsiste = 0;
 
   ngOnInit(): void {
     // Route params
@@ -39,49 +34,45 @@ export class EstadisticasCursoComponent implements OnInit {
   }
 
   private getAsistenciasCurso(idCurso: number) {
-    this.claseService.getClasesCurso(idCurso).subscribe(
-      (clases) => {
-        clases.forEach((elem) => {
-          this.claseEstudianteService
-            .getClaseEstudiantesClase(elem.id)
-            .subscribe(
-              (clasesEstudiantes) => {
-                clasesEstudiantes.forEach((elem) => {
-                  elem.asiste ? this.asiste++ : this.noAsiste++;
-                });
+    this.estadisticasService.getEstadisticasAsistencaCurso(idCurso).then(res => {
+      let { asiste, noAsiste } = res;
 
-                this.optionsAsistencia = {
-                  title: {
-                    display: true,
-                    text: `${
-                      (this.asiste * 100) / (this.asiste + this.noAsiste)
-                    }%`,
-                    fontSize: 25,
-                  },
-                };
-
-                this.dataAsistencia = {
-                  labels: ['Asiste', 'No Asiste'],
-                  datasets: [
-                    {
-                      data: [this.asiste, this.noAsiste],
-                      backgroundColor: ['#FF6384', '#36A2EB'],
-                      hoverBackgroundColor: ['#FF6384', '#36A2EB'],
-                    },
-                  ],
-                };
-              },
-              (err) => console.log(err)
-            );
-        });
-      },
-      (err) => console.log(err)
-    );
+      this.optionsAsistencia = {
+        title: {
+          display: true,
+          text: `${Math.round((asiste * 100) / (asiste + noAsiste))}%`,
+          fontSize: 25,
+        },
+      };
+  
+      this.dataAsistencia = {
+        labels: ['Asiste', 'No Asiste'],
+        datasets: [
+          {
+            data: [asiste, noAsiste],
+            backgroundColor: ['#FF6384', '#36A2EB'],
+            hoverBackgroundColor: ['#FF6384', '#36A2EB'],
+          },
+        ],
+      };
+    });
   }
 
   private getCalificacionesCurso(idCurso: number) {
     this.estadisticasService
       .getEstadisticasCalificacionesCurso(idCurso)
-      .then((res) => (this.dataCalificaciones = res));
+      .then((res) => {
+        this.dataCalificaciones = res;
+        if (res.datasets.length == 0) {
+          this.optionsCalificaciones = {
+            title: {
+              display: true,
+              text: 'No hay datos',
+              fontSize: 15,
+            },
+          };
+        }
+        console.log(res);
+      });
   }
 }

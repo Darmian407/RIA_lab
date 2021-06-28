@@ -18,6 +18,8 @@ export class EstudiantesCursoComponent implements OnInit {
 
   curso: Curso = {};
 
+  rol: string | undefined;
+
   estudiantesCurso: EstudianteCurso[] = [];
 
   displayAgregarEstudianteDialog: boolean = false;
@@ -67,6 +69,14 @@ export class EstudiantesCursoComponent implements OnInit {
         this.estudiantesCurso = result;
       }
     );
+
+    let usuario = localStorage.getItem('user');
+    if (typeof usuario === 'string') {
+      let user = JSON.parse(usuario);
+      if (user && user.roles) {
+        this.rol = user.roles;
+      }
+    }
   }
 
   ngOnSubmit(): void {
