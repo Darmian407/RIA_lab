@@ -10,7 +10,7 @@
   </div>
   <div class="p-col p-md-6">
     <p-card header="Calificaciones del curso" styleClass="p-card-shadow">
-      <p-chart type="bar" [data]="dataCalificaciones"></p-chart>
+      <p-chart type="bar" [data]="dataCalificaciones" [options]="optionsCalificaciones" [responsive]="true"></p-chart>
       <ng-template pTemplate="footer">
         <p-button label="Calificaciones" icon="pi pi-percentage" [routerLink]="['/curso/calificaciones', cursoId]">
         </p-button>

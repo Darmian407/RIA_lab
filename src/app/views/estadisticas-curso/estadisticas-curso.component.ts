@@ -4,6 +4,7 @@ import { CalificacionEstudianteService } from 'src/app/services/calificacion-est
 import { calificacionesService } from 'src/app/services/CalificacionesService/calificaciones.service';
 import { ClaseEstudianteService } from 'src/app/services/ClaseEstudainteService/clase-estudiante.service';
 import { clasesService } from 'src/app/services/ClasesService/clases.service';
+import { EstadisticasService } from 'src/app/services/Estadisticas/estadisticas.service';
 
 @Component({
   selector: 'app-estadisticas-curso',
@@ -15,15 +16,17 @@ export class EstadisticasCursoComponent implements OnInit {
     private route: ActivatedRoute,
     private claseEstudianteService: ClaseEstudianteService,
     private claseService: clasesService,
-    private calificacionesService: calificacionesService,
-    private calificacionesEstudianteService: CalificacionEstudianteService
-  ) { }
+    private estadisticasService: EstadisticasService
+  ) {}
 
   cursoId: any;
   dataAsistencia: any;
   dataCalificaciones: any;
   optionsAsistencia: any;
   optionsCalificaciones: any;
+
+  asiste = 0;
+  noAsiste = 0;
 
   ngOnInit(): void {
     // Route params
@@ -43,17 +46,16 @@ export class EstadisticasCursoComponent implements OnInit {
             .getClaseEstudiantesClase(elem.id)
             .subscribe(
               (clasesEstudiantes) => {
-                let asiste = 0;
-                let noAsiste = 0;
-
                 clasesEstudiantes.forEach((elem) => {
-                  elem.asiste ? asiste++ : noAsiste++;
+                  elem.asiste ? this.asiste++ : this.noAsiste++;
                 });
 
                 this.optionsAsistencia = {
                   title: {
                     display: true,
-                    text: `${(asiste * 100) / (asiste + noAsiste)}%`,
+                    text: `${
+                      (this.asiste * 100) / (this.asiste + this.noAsiste)
+                    }%`,
                     fontSize: 25,
                   },
                 };
@@ -62,7 +64,7 @@ export class EstadisticasCursoComponent implements OnInit {
                   labels: ['Asiste', 'No Asiste'],
                   datasets: [
                     {
-                      data: [asiste, noAsiste],
+                      data: [this.asiste, this.noAsiste],
                       backgroundColor: ['#FF6384', '#36A2EB'],
                       hoverBackgroundColor: ['#FF6384', '#36A2EB'],
                     },
@@ -78,22 +80,8 @@ export class EstadisticasCursoComponent implements OnInit {
   }
 
   private getCalificacionesCurso(idCurso: number) {
-    this.calificacionesService.getCalificacionesCurso(idCurso).subscribe(
-      (calificaciones) => {
-        calificaciones.forEach((calificacion) => {
-          this.calificacionesEstudianteService
-            .getCalificacionEstudiantesCalificacion(calificacion.id)
-            .subscribe(
-              (calificacionesEstudiante) => {
-                calificacionesEstudiante.forEach((elem) => {
-                  console.log(elem)
-                });
-              },
-              (err) => console.log(err)
-            );
-        });
-      },
-      (err) => console.log(err)
-    );
+    this.estadisticasService
+      .getEstadisticasCalificacionesCurso(idCurso)
+      .then((res) => (this.dataCalificaciones = res));
   }
 }
