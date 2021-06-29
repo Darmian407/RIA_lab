@@ -1,5 +1,6 @@
 <p-card header="Estudiantes del Curso" [subheader]="curso.nombre ? curso.nombre : '' "
     styleClass="p-card-shadow p-p-3 p-mt-3">
+<<<<<<< Updated upstream
     <p-table [value]="estudiantesCurso" [responsive]="true" [scrollLeft]="true" styleClass="p-datatable-gridlines p-datatable-striped">
         <ng-template pTemplate="header">
             <tr>
@@ -31,6 +32,118 @@
     </p-table>
     <button pButton pRipple type="button" label="Agregar Estudiante" class="p-button-rounded p-button-primary p-mt-3"
         (click)="showAgregarEstudianteDialog()"></button>
+=======
+    <ng-container *ngIf="rol && rol.includes('DOCENTE')">
+
+            <p-dropdown id="calificaciones" placeholder="Seleccione una Calificación" [options]="calificaciones" optionValue="id" optionLabel="titulo" (onChange)="calificacionFunction($event)"></p-dropdown>
+            
+    </ng-container>
+    <form [formGroup]="form" (ngSubmit)="ngOnSubmitCalificaciones()">
+
+        <p-table [value]="estudiantesCurso" [responsive]="true" [scrollLeft]="true"
+            styleClass="p-datatable-gridlines p-datatable-striped" dataKey="id" editMode="row">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Id</th>
+                    <th>Documento</th>
+                    <th>Primer Nombre</th>
+                    <th>Segundo Nombre</th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
+                    <ng-container *ngIf="rol && rol.includes('ADMIN')">
+                        <th>Acciones</th>
+                    </ng-container>
+                    <ng-container *ngIf="calificacion && rol && rol.includes('DOCENTE')">
+                        <th>{{calificacion.titulo}}</th>
+                    </ng-container>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-estudiante_curso let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="estudiante_curso">
+                    <td>{{estudiante_curso.estudiante.id}}</td>
+                    <td>{{estudiante_curso.estudiante.documento}}</td>
+                    <td>{{estudiante_curso.estudiante.primerNombre}}</td>
+                    <td>{{estudiante_curso.estudiante.segundoNombre}}</td>
+                    <td>{{estudiante_curso.estudiante.primerApellido}}</td>
+                    <td>{{estudiante_curso.estudiante.segundoApellido}}</td>
+                    <ng-container *ngIf="rol && rol.includes('ADMIN')">
+                        <td>
+                            <button pButton pRipple type="button" icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger p-mr-2"
+                                (click)="ngOnDelete(estudiante_curso.id)">
+                            </button>
+                        </td>
+                    </ng-container>
+                    <ng-container *ngIf="calificacion && rol && rol.includes('DOCENTE')">
+                        <td>
+                            <div class="p-fluid">
+                                <div class="p-field">
+                                    <p-inputNumber
+                                        *ngIf="!calificado(estudiante_curso.estudiante.id); else valorCalificacion"
+                                        [ngModel]="0" [formControlName]="estudiante_curso.estudiante.id" mode="decimal"
+                                        [showButtons]="true" [min]=1 [max]="maxCalificacion">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </td>
+                        <ng-template #valorCalificacion>
+                            <td>
+
+                                <div class="p-grid p-ai-center vertical-container">
+                                    <div class="p-col">
+                                        <div class="box">
+                                            <p-cellEditor>
+                                                <ng-template pTemplate="input">
+                                                    <p-inputNumber
+                                                        [(ngModel)]="calificado(estudiante_curso.estudiante.id).nota"
+                                                        [ngModelOptions]="{standalone: true}" [min]=1
+                                                        [max]="maxCalificacion" mode="decimal">
+                                                    </p-inputNumber>
+                                                </ng-template>
+                                                <ng-template pTemplate="output">
+                                                    {{calificado(estudiante_curso.estudiante.id).nota}}
+                                                </ng-template>
+                                            </p-cellEditor>
+                                        </div>
+                                    </div>
+                                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                        icon="pi pi-pencil" class="p-button-rounded p-button-warning"
+                                        (click)="onRowEditInit(estudiante_curso.estudiante, ri)"></button>
+                                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                        icon="pi pi-check" (click)="onRowEditSave(estudiante_curso.estudiante,ri)"
+                                        class="p-button-rounded p-button-text p-button-success"></button>
+                                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                        icon="pi pi-times" (click)="onRowEditCancel(ri,estudiante_curso.estudiante.id)"
+                                        class="p-button-rounded p-button-text p-button-danger"></button>
+                                    <div class="p-col">
+
+                                        <button pButton pRipple type="button" icon="pi pi-trash"
+                                            class="p-button-rounded p-button-danger"
+                                            (click)="onDelete(estudiante_curso.estudiante.id)">
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </ng-template>
+                    </ng-container>
+                </tr>
+            </ng-template>
+        </p-table>
+        <ng-container *ngIf="rol && rol.includes('ADMIN')">
+            <button pButton pRipple type="button" label="Agregar Estudiante"
+                class="p-button-rounded p-button-primary p-mt-3" (click)="showAgregarEstudianteDialog()"></button>
+        </ng-container>
+
+        <ng-container *ngIf="calificacion && rol && rol.includes('DOCENTE')">
+            <button pButton pRipple type="submit" label="Confirmar calificaciones" icon="pi pi-check"
+                class="p-button-rounded p-button-primary p-mt-3"></button>
+        </ng-container>
+
+
+    </form>
+>>>>>>> Stashed changes
 </p-card>
 
 <p-dialog header="Agregar Estudiante" [(visible)]="displayAgregarEstudianteDialog" [breakpoints]="[{'960px': '75vw'}]"
@@ -63,4 +176,9 @@
     </form>
 </p-dialog>
 
+<<<<<<< Updated upstream
+=======
+</ng-container>
+
+>>>>>>> Stashed changes
 <p-confirmDialog header="Confirmacion" icon="pi pi-exclamation-triangle"></p-confirmDialog>

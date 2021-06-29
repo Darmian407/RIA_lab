@@ -58,7 +58,7 @@
                                     icon="pi pi-check" (click)="onRowEditSave(estudiante_curso.estudiante,ri)"
                                     class="p-button-rounded p-button-text p-button-success"></button>
                                 <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
-                                    icon="pi pi-times" (click)="onRowEditCancel(ri)"
+                                    icon="pi pi-times" (click)="onRowEditCancel(ri,estudiante_curso.estudiante.id)"
                                     class="p-button-rounded p-button-text p-button-danger"></button>
                                 <div class="p-col">
 
