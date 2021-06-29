@@ -94,10 +94,7 @@
                 </tr>
             </ng-template>
         </p-table>
-        <ng-container *ngIf="rol && rol.includes('ADMIN')">
-            <button pButton pRipple type="button" label="Agregar Estudiante"
-                class="p-button-rounded p-button-primary p-mt-3" (click)="showAgregarEstudianteDialog()"></button>
-        </ng-container>
+        
 
         <ng-container *ngIf="calificacion && rol && rol.includes('DOCENTE')">
             <button pButton pRipple type="submit" label="Confirmar calificaciones" icon="pi pi-check"
