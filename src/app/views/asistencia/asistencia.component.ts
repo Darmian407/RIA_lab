@@ -35,6 +35,8 @@ export class AsistenciaComponent implements OnInit {
 
   asistenciasGet: any[] = [];
 
+  cols: any[] = [];
+
   ngOnInit(): void {
     // Route params
     const routeParams = this.route.snapshot.paramMap;
@@ -67,7 +69,16 @@ export class AsistenciaComponent implements OnInit {
          },
       );
     }
-   
+
+    this.cols = [
+      { field: 'documento', header: 'Documento' },
+      { field: 'primerApellido', header: 'Primer Apellido' },
+      { field: 'segundoApellido', header: 'Segundo Apellido' },
+      { field: 'primerNombre', header: 'Primer Nombre' },
+      { field: 'segundoNombre', header: 'Segundo Nombre' },
+      
+      
+  ];
     
   }
 

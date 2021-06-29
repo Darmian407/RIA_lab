@@ -8,16 +8,13 @@
     </ng-container>
     <form [formGroup]="form" (ngSubmit)="ngOnSubmitCalificaciones()">
 
-        <p-table [value]="estudiantesCurso" [responsive]="true" [scrollLeft]="true"
+        <p-table [columns]="cols" [value]="estudiantesCurso" [responsive]="true" [scrollLeft]="true"
             styleClass="p-datatable-gridlines p-datatable-striped" dataKey="id" editMode="row">
-            <ng-template pTemplate="header">
+            <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th>Id</th>
-                    <th>Documento</th>
-                    <th>Primer Nombre</th>
-                    <th>Segundo Nombre</th>
-                    <th>Primer Apellido</th>
-                    <th>Segundo Apellido</th>
+                    <th *ngFor="let col of columns">
+                        {{col.header}}
+                    </th>
                     <ng-container *ngIf="rol && rol.includes('ADMIN')">
                         <th>Acciones</th>
                     </ng-container>
@@ -27,14 +24,12 @@
 
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-estudiante_curso let-editing="editing" let-ri="rowIndex">
+            <ng-template pTemplate="body" let-estudiante_curso let-editing="editing" let-ri="rowIndex" let-columns="columns">
                 <tr [pEditableRow]="estudiante_curso">
-                    <td>{{estudiante_curso.estudiante.id}}</td>
-                    <td>{{estudiante_curso.estudiante.documento}}</td>
-                    <td>{{estudiante_curso.estudiante.primerNombre}}</td>
-                    <td>{{estudiante_curso.estudiante.segundoNombre}}</td>
-                    <td>{{estudiante_curso.estudiante.primerApellido}}</td>
-                    <td>{{estudiante_curso.estudiante.segundoApellido}}</td>
+                    <td *ngFor="let col of columns">
+                        <span class="p-column-title">{{col.header}}</span>
+                        {{estudiante_curso.estudiante[col.field]}}
+                    </td>
                     <ng-container *ngIf="rol && rol.includes('ADMIN')">
                         <td>
                             <button pButton pRipple type="button" icon="pi pi-trash"
