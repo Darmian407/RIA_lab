@@ -28,27 +28,22 @@
 
 
 
-  <p-table [value]="estudiantes.lista" [responsive]="true" [scrollLeft]="true"
+  <p-table [columns]="cols" [value]="estudiantes.lista" [responsive]="true" [scrollLeft]="true"
     styleClass="p-datatable-gridlines p-datatable-striped">
-    <ng-template pTemplate="header">
+    <ng-template pTemplate="header" let-columns>
       <tr>
-        <th>Documento</th>
-        <th>Primer Apellido</th>
-        <th>Segundo Apellido</th>
-        <th>Primer Nombre</th>
-        <th>Segundo Nombre</th>
-        <th>Fecha de Nacimiento</th>
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
         <th>Acciones</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-estudiante>
+    <ng-template pTemplate="body" let-estudiante let-columns="columns">
       <tr>
-        <td>{{ estudiante.documento }}</td>
-        <td>{{ estudiante.primerApellido }}</td>
-        <td>{{ estudiante.segundoApellido }}</td>
-        <td>{{ estudiante.primerNombre }}</td>
-        <td>{{ estudiante.segundoNombre }}</td>
-        <td>{{ convertirFecha(estudiante.fechaNacimiento) }}</td>
+        <td *ngFor="let col of columns">
+          <span class="p-column-title">{{col.header}}</span>
+          {{col.field!='fechaNacimiento'?estudiante[col.field]:convertirFecha(estudiante[col.field])}}
+      </td>
         <td>
           <div class="p-grid">
             <div class="p-col">

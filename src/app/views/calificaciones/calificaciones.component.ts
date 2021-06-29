@@ -33,6 +33,8 @@ export class CalificacionesComponent implements OnInit {
 
   selectedCalificacion: any = {};
 
+  cols: any[] = [];
+
   constructor(
     private messageService: MessageService, 
     private confirmationService: ConfirmationService, 
@@ -89,6 +91,11 @@ ngOnInit(): void {
       this.calificacionesCurso = result;
     }
   );
+
+  this.cols = [
+    { field: 'titulo', header: 'Titulo' },
+    { field: 'ponderacion', header: 'Porcentaje de ponderacion' },    
+];
 
 }
 

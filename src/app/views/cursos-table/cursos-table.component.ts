@@ -32,6 +32,8 @@ export class CursosTableComponent implements OnInit {
 
   public docentes: User[] = [];
 
+  cols: any[] = [];
+
   constructor(
     private cursosService: CursoService,
     private messageService: MessageService,
@@ -51,6 +53,14 @@ export class CursosTableComponent implements OnInit {
     });
     this.getCursos();
     this.docentes = this.docenteService.getDocentes();
+
+    this.cols = [
+      { field: 'nombre', header: 'Nombre' },
+      { field: 'descripcion', header: 'Descripción' },
+      { field: 'programa', header: 'Programa' },
+      
+      
+  ];
   }
 
   getCursos() {

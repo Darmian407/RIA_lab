@@ -1,29 +1,36 @@
 <p-card header="Estudiantes del Curso" [subheader]="curso.nombre ? curso.nombre : '' "
     styleClass="p-card-shadow p-p-3 p-mt-3">
-    <p-table [value]="estudiantesCurso" [responsive]="true" [scrollLeft]="true"
+    <p-table [columns]="cols" [value]="estudiantesCurso" [responsive]="true" [scrollLeft]="true"
         styleClass="p-datatable-gridlines p-datatable-striped">
-        <ng-template pTemplate="header">
+        <ng-template pTemplate="header" let-columns>
             <tr>
-                <th>Id</th>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+                <!-- <th>Id</th>
                 <th>Documento</th>
                 <th>Primer Nombre</th>
                 <th>Segundo Nombre</th>
                 <th>Primer Apellido</th>
-                <th>Segundo Apellido</th>
+                <th>Segundo Apellido</th> -->
                 <ng-container *ngIf="rol && rol.includes('ADMIN')">
                     <th>Acciones</th>
                 </ng-container>
 
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-estudiante_curso>
+        <ng-template pTemplate="body" let-estudiante_curso let-columns="columns">
             <tr>
-                <td>{{estudiante_curso.id}}</td>
+                <td *ngFor="let col of columns">
+                    <span class="p-column-title">{{col.header}}</span>
+                    {{estudiante_curso.estudiante[col.field]}}
+                </td>
+                <!-- <td>{{estudiante_curso.id}}</td>
                 <td>{{estudiante_curso.estudiante.documento}}</td>
                 <td>{{estudiante_curso.estudiante.primerNombre}}</td>
                 <td>{{estudiante_curso.estudiante.segundoNombre}}</td>
                 <td>{{estudiante_curso.estudiante.primerApellido}}</td>
-                <td>{{estudiante_curso.estudiante.segundoApellido}}</td>
+                <td>{{estudiante_curso.estudiante.segundoApellido}}</td> -->
                 <ng-container *ngIf="rol && rol.includes('ADMIN')">
                     <td>
                         <button pButton pRipple type="button" icon="pi pi-trash"

@@ -30,6 +30,8 @@ export class EstudiantesCursoComponent implements OnInit {
 
   agregarEstudianteForm: FormGroup = new FormGroup({});
 
+  cols: any[] = [];
+
   constructor(
     private estudiantesCursoService: EstudianteCursoService,
     private route: ActivatedRoute,
@@ -77,6 +79,15 @@ export class EstudiantesCursoComponent implements OnInit {
         this.rol = user.roles;
       }
     }
+
+    this.cols = [
+      { field: 'documento', header: 'Documento' },
+      { field: 'primerApellido', header: 'Primer Apellido' },
+      { field: 'segundoApellido', header: 'Segundo Apellido' },
+      { field: 'primerNombre', header: 'Primer Nombre' },
+      { field: 'segundoNombre', header: 'Segundo Nombre' },
+      
+  ];
   }
 
   ngOnSubmit(): void {

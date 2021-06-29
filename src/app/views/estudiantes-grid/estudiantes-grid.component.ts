@@ -33,6 +33,8 @@ export class EstudiantesGridComponent implements OnInit {
 
   estudiantes: { 'lista': Estudiante[], 'size': number } = { 'lista': [], 'size': 0 };
 
+  cols: any[] = [];
+
   constructor(
     public estudianteService: estudianteService,
     private messageService: MessageService,
@@ -49,6 +51,17 @@ export class EstudiantesGridComponent implements OnInit {
       fechaNacimiento: new FormControl('', [Validators.required]),
     });
     this.getEstudiantes();
+
+    this.cols = [
+      { field: 'documento', header: 'Documento' },
+      { field: 'primerApellido', header: 'Primer Apellido' },
+      { field: 'segundoApellido', header: 'Segundo Apellido' },
+      { field: 'primerNombre', header: 'Primer Nombre' },
+      { field: 'segundoNombre', header: 'Segundo Nombre' },
+      { field: 'fechaNacimiento', header: 'Fecha de Nacimiento' },
+      
+  ];
+
   }
 
   ngOnSubmit(): void {

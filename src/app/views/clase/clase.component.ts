@@ -37,6 +37,8 @@ export class ClaseComponent implements OnInit {
 
   selectedClase: any = {};
 
+  cols: any[] = [];
+
   constructor(
     private claseService: clasesService, 
     private messageService: MessageService, 
@@ -96,6 +98,14 @@ ngOnInit(): void {
         this.clasesCurso = result;
       }
     );
+
+    this.cols = [
+      { field: 'titulo', header: 'Titulo' },
+      { field: 'fecha', header: 'Fecha' },
+      { field: 'descripcion', header: 'Descripción' },
+      
+      
+  ];
 }
 
 
