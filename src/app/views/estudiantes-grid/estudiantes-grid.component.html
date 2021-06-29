@@ -1,22 +1,22 @@
 <p-card header="Estudiantes" styleClass="p-card-shadow p-p-3 p-mt-3">
-  <div class="p-gridp-mb-3">
+  <div class="p-grid p-jc-center p-ai-center p-mb-3">
 
-    <div class="p-col">
+    <div class="p-col-12 p-md-3">
       <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()"
         styleClass="p-button-text"></p-button>
       <p-button type="button" [label]="index.toString()" (click)="reset()" styleClass="p-button-text"></p-button>
       <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()"
         styleClass="p-button-text"></p-button>
     </div>
-    <div class="p-col"><span class="p-float-label">
+    <div class="p-col-12 p-md-3"><span class="p-float-label">
         <input type="text" id="documento" (keyup)="filter($event)" pInputText>
         <label for="programa">Documento</label>
       </span></div>
-    <div class="p-col"><span class="p-float-label">
+    <div class="p-col-12 p-md-3"><span class="p-float-label">
         <input type="text" id="nombre" (keyup)="filter($event)" pInputText>
         <label for="programa">Nombre</label>
       </span></div>
-    <div class="p-col">
+    <div class="p-col-12 p-md-3">
       <span class="p-float-label">
         <input type="text" id="apellido" (keyup)="filter($event)" pInputText>
         <label for="programa">Apellido</label>

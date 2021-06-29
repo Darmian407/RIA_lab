@@ -1,7 +1,8 @@
 <p-card header="Estudiantes del Curso" [subheader]="curso.nombre ? curso.nombre : '' "
     styleClass="p-card-shadow p-p-3 p-mt-3">
-<<<<<<< Updated upstream
-    <p-table [value]="estudiantesCurso" [responsive]="true" [scrollLeft]="true" styleClass="p-datatable-gridlines p-datatable-striped">
+    <p-table [value]="estudiantesCurso" [responsive]="true" [scrollLeft]="true"
+        styleClass="p-datatable-gridlines p-datatable-striped">
+
         <ng-template pTemplate="header">
             <tr>
                 <th>Id</th>
@@ -10,7 +11,10 @@
                 <th>Segundo Nombre</th>
                 <th>Primer Apellido</th>
                 <th>Segundo Apellido</th>
-                <th>Acciones</th>
+                <ng-container *ngIf="rol && rol.includes('ADMIN')">
+                    <th>Acciones</th>
+                </ng-container>
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-estudiante_curso>
@@ -21,22 +25,23 @@
                 <td>{{estudiante_curso.estudiante.segundoNombre}}</td>
                 <td>{{estudiante_curso.estudiante.primerApellido}}</td>
                 <td>{{estudiante_curso.estudiante.segundoApellido}}</td>
-                <td>
-                    <button pButton pRipple type="button" icon="pi pi-trash"
-                        class="p-button-rounded p-button-danger p-mr-2"
-                        (click)="ngOnDelete(estudiante_curso.id)">
-                    </button>
-                </td>
+                <ng-container *ngIf="rol && rol.includes('ADMIN')">
+                    <td>
+                        <button pButton pRipple type="button" icon="pi pi-trash"
+                            class="p-button-rounded p-button-danger p-mr-2" (click)="ngOnDelete(estudiante_curso.id)">
+                        </button>
+                    </td>
+                </ng-container>
             </tr>
         </ng-template>
     </p-table>
     <button pButton pRipple type="button" label="Agregar Estudiante" class="p-button-rounded p-button-primary p-mt-3"
         (click)="showAgregarEstudianteDialog()"></button>
-=======
     <ng-container *ngIf="rol && rol.includes('DOCENTE')">
 
-            <p-dropdown id="calificaciones" placeholder="Seleccione una Calificación" [options]="calificaciones" optionValue="id" optionLabel="titulo" (onChange)="calificacionFunction($event)"></p-dropdown>
-            
+        <p-dropdown id="calificaciones" placeholder="Seleccione una Calificación" [options]="calificaciones"
+            optionValue="id" optionLabel="titulo" (onChange)="calificacionFunction($event)"></p-dropdown>
+
     </ng-container>
     <form [formGroup]="form" (ngSubmit)="ngOnSubmitCalificaciones()">
 
@@ -143,42 +148,46 @@
 
 
     </form>
->>>>>>> Stashed changes
+    <ng-container *ngIf="rol && rol.includes('ADMIN')">
+        <button pButton pRipple type="button" label="Agregar Estudiante"
+            class="p-button-rounded p-button-primary p-mt-3" (click)="showAgregarEstudianteDialog()"></button>
+    </ng-container>
 </p-card>
 
-<p-dialog header="Agregar Estudiante" [(visible)]="displayAgregarEstudianteDialog" [breakpoints]="[{'960px': '75vw'}]"
-    [style]="{width: '50vw'}" [baseZIndex]="10000">
-    <form [formGroup]="agregarEstudianteForm" (ngSubmit)="ngOnSubmit()">
-        <div class="p-grid p-formgrid p-flex-column p-fluid">
-            <div class="p-col p-mt-3">
-                <span class="p-float-label">
-                    <p-dropdown formControlName="estudiante" id="estudiante"
-                        [options]="estudiantes" optionValue="id" [(ngModel)]="selectedEstudiante" placeholder="Seleccione un Estudiante">
+<ng-container *ngIf="rol && rol.includes('ADMIN')">
+    <p-dialog header="Agregar Estudiante" [(visible)]="displayAgregarEstudianteDialog"
+        [breakpoints]="[{'960px': '75vw'}]" [style]="{width: '50vw'}" [baseZIndex]="10000">
+        <form [formGroup]="agregarEstudianteForm" (ngSubmit)="ngOnSubmit()">
+            <div class="p-grid p-formgrid p-flex-column p-fluid">
+                <div class="p-col p-mt-3">
+                    <span class="p-float-label">
+                        <p-dropdown formControlName="estudiante" id="estudiante" [options]="estudiantes"
+                            optionValue="id" [(ngModel)]="selectedEstudiante" placeholder="Seleccione un Estudiante">
 
-                        <ng-template pTemplate="selectedItem">
-                            {{selectedEstudiante.primerNombre + ' ' + selectedEstudiante.segundoNombre + ' ' +
-                            selectedEstudiante.primerApellido + ' ' + selectedEstudiante.segundoApellido}}
-                        </ng-template>
+                            <ng-template pTemplate="selectedItem">
+                                {{selectedEstudiante.primerNombre + ' ' + selectedEstudiante.segundoNombre + ' ' +
+                                selectedEstudiante.primerApellido + ' ' + selectedEstudiante.segundoApellido}}
+                            </ng-template>
 
-                        <ng-template let-estudiante pTemplate="item">
-                            {{estudiante.primerNombre + ' ' + estudiante.segundoNombre + ' ' + estudiante.primerApellido
-                            + ' ' + estudiante.segundoApellido}}
-                        </ng-template>
+                            <ng-template let-estudiante pTemplate="item">
+                                {{estudiante.primerNombre + ' ' + estudiante.segundoNombre + ' ' +
+                                estudiante.primerApellido
+                                + ' ' + estudiante.segundoApellido}}
+                            </ng-template>
 
-                    </p-dropdown>
-                    <label for="estudiante">Estudiante</label>
-                </span>
+                        </p-dropdown>
+                        <label for="estudiante">Estudiante</label>
+                    </span>
+                </div>
+                <div class="p-col p-mt-5">
+                    <p-button type="submit" label="Agregar" icon="pi pi-plus"></p-button>
+                </div>
             </div>
-            <div class="p-col p-mt-5">
-                <p-button type="submit" label="Agregar" icon="pi pi-plus"></p-button>
-            </div>
-        </div>
-    </form>
-</p-dialog>
+        </form>
+    </p-dialog>
 
-<<<<<<< Updated upstream
-=======
+
 </ng-container>
 
->>>>>>> Stashed changes
+
 <p-confirmDialog header="Confirmacion" icon="pi pi-exclamation-triangle"></p-confirmDialog>

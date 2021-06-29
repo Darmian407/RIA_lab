@@ -22,6 +22,8 @@ export class EstudiantesCursoComponent implements OnInit {
 
   curso: Curso = {};
 
+  rol: string | undefined;
+
   estudiantesCurso: EstudianteCurso[] = [];
 
   displayAgregarEstudianteDialog: boolean = false;
@@ -82,8 +84,6 @@ export class EstudiantesCursoComponent implements OnInit {
         this.estudiantesCurso = result;
       }
     );
-<<<<<<< Updated upstream
-=======
 
     // Get califcaciones de un curso
     this.calificacionService.getCalificacionesCurso(cursoId).subscribe(
@@ -99,7 +99,6 @@ export class EstudiantesCursoComponent implements OnInit {
         this.rol = user.roles;
       }
     }
->>>>>>> Stashed changes
   }
 
   ngOnSubmit(): void {
