@@ -138,14 +138,14 @@ export class EvaluacionComponent implements OnInit {
       )
   }
 
-  onRowEditCancel(index: number) {
-    this.calificacionesGet[index] = this.clonedCalificaciones[index];
+  onRowEditCancel(index: number, idEstudiante:number) {
+    this.calificacionesGet[this.calificacionesGet.findIndex(elem => elem.estudiante.id === idEstudiante)] = this.clonedCalificaciones[index];
     delete this.clonedCalificaciones[index];
   }
 
   onDelete(idEstudiante: number) {
     this.confirmationService.confirm({
-      message: 'Seguro que quiere eliminar la asistencia?',
+      message: 'Seguro que quiere eliminar la calificación?',
       accept: () => {
         let calificacionEst = this.calificacionesGet.find(calif => calif.estudiante.id === idEstudiante);
         this.calificacionEstudianteService.deleteCalificacionEstudiante(calificacionEst.id).subscribe(

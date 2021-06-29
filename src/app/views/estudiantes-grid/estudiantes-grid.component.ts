@@ -122,13 +122,17 @@ export class EstudiantesGridComponent implements OnInit {
   }
 
   next() {
-    this.index++;
-    this.getEstudiantes();
+    if (this.isFirstPage()) {
+      this.index++;
+      this.getEstudiantes();
+    }
   }
 
   prev() {
+    if (this.isLastPage()) {
     this.index--;
     this.getEstudiantes();
+    }
   }
 
   reset() {
@@ -147,25 +151,25 @@ export class EstudiantesGridComponent implements OnInit {
   filter(e: any) {
     switch (e.target.id) {
       case 'documento':
-        if(!(e.target.value==="")){
+        if (!(e.target.value === "")) {
           this.queryDocument = `&documento=${e.target.value}`;
-        }else{
+        } else {
           this.queryDocument = "";
         }
         break;
       case 'nombre':
-        if(!(e.target.value==="")){
+        if (!(e.target.value === "")) {
           this.queryName = `&nombre=${e.target.value}`;
-        }else{
+        } else {
           this.queryName = "";
-        }        
+        }
         break;
       case 'apellido':
-        if(!(e.target.value==="")){
+        if (!(e.target.value === "")) {
           this.queryLastname = `&apellido=${e.target.value}`;
-        }else{
+        } else {
           this.queryLastname = "";
-        }        
+        }
         break;
 
       default:
