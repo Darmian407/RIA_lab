@@ -66,9 +66,6 @@ export class EstadisticasService {
         )
         .toPromise();
 
-        console.log(calificacionesEstudiantes);
-        
-
       calificacionesEstudiantes.forEach((calificacionEstudiante) => {
         if (calificacionEstudiante.estudiante?.documento) {
           if (

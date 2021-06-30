@@ -1,4 +1,4 @@
-<p-card header="Estudiantes del Curso" [subheader]="curso.nombre ? curso.nombre : '' "
+<p-card header="Estudiantes del Curso"
     styleClass="p-card-shadow p-p-3 p-mt-3">
     <ng-container *ngIf="rol && rol.includes('DOCENTE')">
 
@@ -24,7 +24,8 @@
 
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-estudiante_curso let-editing="editing" let-ri="rowIndex" let-columns="columns">
+            <ng-template pTemplate="body" let-estudiante_curso let-editing="editing" let-ri="rowIndex"
+                let-columns="columns">
                 <tr [pEditableRow]="estudiante_curso">
                     <td *ngFor="let col of columns">
                         <span class="p-column-title">{{col.header}}</span>
@@ -94,7 +95,7 @@
                 </tr>
             </ng-template>
         </p-table>
-        
+
 
         <ng-container *ngIf="calificacion && rol && rol.includes('DOCENTE')">
             <button pButton pRipple type="submit" label="Confirmar calificaciones" icon="pi pi-check"
@@ -115,24 +116,21 @@
         <form [formGroup]="agregarEstudianteForm" (ngSubmit)="ngOnSubmit()">
             <div class="p-grid p-formgrid p-flex-column p-fluid">
                 <div class="p-col p-mt-3">
-                    <span class="p-float-label">
-                        <p-dropdown formControlName="estudiante" id="estudiante" [options]="estudiantes"
-                            optionValue="id" [(ngModel)]="selectedEstudiante" placeholder="Seleccione un Estudiante">
+                    <p-dropdown formControlName="estudiante" id="estudiante" [options]="estudiantes" optionValue="id"
+                        [(ngModel)]="selectedEstudiante" placeholder="Seleccione un Estudiante">
 
-                            <ng-template pTemplate="selectedItem">
-                                {{selectedEstudiante.primerNombre + ' ' + selectedEstudiante.segundoNombre + ' ' +
-                                selectedEstudiante.primerApellido + ' ' + selectedEstudiante.segundoApellido}}
-                            </ng-template>
+                        <ng-template pTemplate="selectedItem">
+                            {{selectedEstudiante.primerNombre + ' ' + selectedEstudiante.segundoNombre + ' ' +
+                            selectedEstudiante.primerApellido + ' ' + selectedEstudiante.segundoApellido}}
+                        </ng-template>
 
-                            <ng-template let-estudiante pTemplate="item">
-                                {{estudiante.primerNombre + ' ' + estudiante.segundoNombre + ' ' +
-                                estudiante.primerApellido
-                                + ' ' + estudiante.segundoApellido}}
-                            </ng-template>
+                        <ng-template let-estudiante pTemplate="item">
+                            {{estudiante.primerNombre + ' ' + estudiante.segundoNombre + ' ' +
+                            estudiante.primerApellido
+                            + ' ' + estudiante.segundoApellido}}
+                        </ng-template>
 
-                        </p-dropdown>
-                        <label for="estudiante">Estudiante</label>
-                    </span>
+                    </p-dropdown>
                 </div>
                 <div class="p-col p-mt-5">
                     <p-button type="submit" label="Agregar" icon="pi pi-plus"></p-button>

@@ -40,7 +40,7 @@ export class EstadisticasCursoComponent implements OnInit {
       this.optionsAsistencia = {
         title: {
           display: true,
-          text: `${Math.round((asiste * 100) / (asiste + noAsiste))}%`,
+          text: `${asiste > 0 ? Math.round((asiste * 100) / (asiste + noAsiste)) : 0}%`,
           fontSize: 25,
         },
       };
@@ -72,7 +72,6 @@ export class EstadisticasCursoComponent implements OnInit {
             },
           };
         }
-        console.log(res);
       });
   }
 }

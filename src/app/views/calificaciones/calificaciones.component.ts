@@ -36,116 +36,115 @@ export class CalificacionesComponent implements OnInit {
   cols: any[] = [];
 
   constructor(
-    private messageService: MessageService, 
-    private confirmationService: ConfirmationService, 
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private route: ActivatedRoute,
     private cursosService: CursoService,
     private calificacionesService: calificacionesService,
-    ) { }
+  ) { }
 
   ngOnSubmit() {
     let calificacion = new Calificacion();
     calificacion.titulo = this.calificacionForm.controls.titulo.value;
-    calificacion.ponderacion = this.calificacionForm.controls.ponderacion.value; 
+    calificacion.ponderacion = this.calificacionForm.controls.ponderacion.value;
     calificacion.cursosId = this.cursoId;
 
     console.log(calificacion);
-    
+
     this.calificacionesService.postCalificaciones(calificacion).subscribe(
-        response => {
-            this.calificacionForm.reset;
-            if(this.cursoId){
-              this.calificacionesService.getCalificacionesCurso(this.cursoId);
-            }
-            this.messageService.add({severity:'success', summary: 'Success', detail: 'Calificacion creada exitosamente'});
-        },
-        error => {
-            this.messageService.add({severity:'error', summary: 'Error', detail: 'Error al crear la calificacion'});
-        }
+      response => {
+        this.calificacionForm.reset;
+        this.displayAgregarCalificacionDialog = false;
+        if(this.cursoId) this.getCalificaciones(this.cursoId);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificacion creada exitosamente' });
+      },
+      error => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al crear la calificacion' });
+      }
     );
 
     this.displayAgregarCalificacionDialog = false;
-}
+  }
 
-ngOnInit(): void {
+  ngOnInit(): void {
+    // Route params
+    const routeParams = this.route.snapshot.paramMap;
+    this.cursoId = Number(routeParams.get('cursoId'));
 
-  // Route params
-  const routeParams = this.route.snapshot.paramMap;
-  this.cursoId = Number(routeParams.get('cursoId'));
+    console.log(this.cursoId);
 
-  console.log(this.cursoId);
-  
-  this.calificacionForm = new FormGroup({
-    titulo: new FormControl('', [Validators.required]),
-    ponderacion: new FormControl('', [Validators.required]),
-  });
+    this.calificacionForm = new FormGroup({
+      titulo: new FormControl('', [Validators.required]),
+      ponderacion: new FormControl('', [Validators.required]),
+    });
 
-  this.editarCalificacionForm = new FormGroup({
-    titulo: new FormControl('', [Validators.required]),
-    ponderacion: new FormControl('', [Validators.required]),
-  });
+    this.editarCalificacionForm = new FormGroup({
+      titulo: new FormControl('', [Validators.required]),
+      ponderacion: new FormControl('', [Validators.required]),
+    });
 
-  // Get clases de un curso
-  this.calificacionesService.getCalificacionesCurso(this.cursoId).subscribe(
-    result => {
-      this.calificacionesCurso = result;
-    }
-  );
+    this.getCalificaciones(this.cursoId);
 
-  this.cols = [
-    { field: 'titulo', header: 'Titulo' },
-    { field: 'ponderacion', header: 'Porcentaje de ponderacion' },    
-];
+    this.cols = [
+      { field: 'titulo', header: 'Titulo' },
+      { field: 'ponderacion', header: 'Porcentaje de ponderacion' },
+    ];
 
-}
+  }
 
+  getCalificaciones(cursoId: number) {
+    // Get calificaciones de un curso
+    this.calificacionesService.getCalificacionesCurso(cursoId).subscribe(
+      result => {
+        this.calificacionesCurso = result;
+      }
+    );
+  }
 
+  ngOnDelete(id: number): void {
+    this.confirmationService.confirm({
+      message: 'Seguro que quieres eliminar la calificacion?',
+      accept: () => {
+        this.calificacionesService.deleteCalificaciones(id).subscribe(
+          result => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificacion eliminada exitosamente' });
+            if (this.cursoId) this.getCalificaciones(this.cursoId);
+          },
+          error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
+        );
+      },
+      reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Eliminación de la calificacion cancelada' })
+    });
+  }
 
-ngOnDelete(id: number): void {
-  this.confirmationService.confirm({
-    message: 'Seguro que quieres eliminar la calificacion?',
-    accept: () => {
-      this.calificacionesService.deleteCalificaciones(id).subscribe(
-        result => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificacion eliminada exitosamente' }),
-        error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
-      );
-    },
-    reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Eliminación de la calificacion cancelada' })
-  });
-}
+  ngOnEdit(): void {
+    let calificacion = new Calificacion();
+    calificacion.id = this.selectedCalificacion.id;
+    calificacion.titulo = this.editarCalificacionForm.controls.titulo.value;
+    calificacion.ponderacion = this.editarCalificacionForm.controls.ponderacion.value;
+    calificacion.cursosId = this.cursoId;
 
-ngOnEdit(): void {
-  let calificacion = new Calificacion();
-  calificacion.id = this.selectedCalificacion.id;
-  calificacion.titulo = this.editarCalificacionForm.controls.titulo.value;
-  calificacion.ponderacion = this.editarCalificacionForm.controls.ponderacion.value;
-  calificacion.cursosId = this.cursoId;
-  
-  
-  
-  this.calificacionesService.putCalificaciones(calificacion).subscribe(
+    this.calificacionesService.putCalificaciones(calificacion).subscribe(
       response => {
-        if(this.cursoId){
-          this.calificacionesService.getCalificacionesCurso(this.cursoId);
-        }
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Clase modificada exitosamente'});
+        this.displayEditarCalificacionDialog = false;
+        if (this.cursoId) this.getCalificaciones(this.cursoId);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Clase modificada exitosamente' });
       },
       error => {
-        this.messageService.add({severity:'error', summary: 'Error', detail: 'Error al modificar la clase'});
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al modificar la clase' });
       }
-  );
-}
+    );
+  }
 
-showEditarCalificacion(calificacion : Calificacion): void {
+  showEditarCalificacion(calificacion: Calificacion): void {
 
-  this.selectedCalificacion = calificacion;
-  this.displayEditarCalificacionDialog = true;    
+    this.selectedCalificacion = calificacion;
+    this.displayEditarCalificacionDialog = true;
 
-}
+  }
 
-
-showAgregarCalificacionDialog(): void {
-  this.displayAgregarCalificacionDialog = true;
-}
+  showAgregarCalificacionDialog(): void {
+    this.displayAgregarCalificacionDialog = true;
+  }
 
 }

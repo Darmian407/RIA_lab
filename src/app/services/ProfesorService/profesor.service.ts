@@ -19,7 +19,7 @@ export class ProfesorService {
         response.forEach(element => {
             this.getRole(element.userName).subscribe(
               role => {
-                if(role == 'DOCENTE'){
+                if(role.includes('DOCENTE')){
                   users.push(element);
                 }
               }
@@ -37,7 +37,7 @@ export class ProfesorService {
   }
 
   getRole(username: string | undefined){
-    return this.http.get(this.URL + '/users-role?username='+ username)
+    return this.http.get<string[]>(this.URL + '/users-role?username='+ username)
   }
   
 }

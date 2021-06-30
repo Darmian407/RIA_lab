@@ -7,11 +7,6 @@
           {{col.header}}
         </th>
         <th>Acciones</th>
-        <!-- <th>Id</th>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Programa</th>
-        <th>Acción</th> -->
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-curso let-columns="columns">
@@ -20,10 +15,6 @@
           <span class="p-column-title">{{col.header}}</span>
           {{curso[col.field]}}
       </td>
-        <!-- <td>{{ curso.id }}</td>
-        <td>{{ curso.nombre }}</td>
-        <td>{{ curso.descripcion }}</td>
-        <td>{{ curso.programa }}</td> -->
         <td>
           <ng-container *ngIf="rol && rol.includes('DOCENTE')">
             <button pButton pRipple type="button" icon="pi pi-calendar-plus" [routerLink]="['/curso/clases', curso.id]"
@@ -78,7 +69,7 @@
       </div>
       <div class="p-col p-mt-3">
         <span class="p-float-label">
-          <p-dropdown formControlName="docentes" id="docentes" [(ngModel)]="selectedCurso.docente" [options]="docentes"
+          <p-dropdown formControlName="docentes" id="docentes" [(ngModel)]="selectedCurso.docenteId" [options]="docentes"
             optionValue="id" optionLabel="userName"></p-dropdown>
           <label for="docentes">Docente</label>
         </span>

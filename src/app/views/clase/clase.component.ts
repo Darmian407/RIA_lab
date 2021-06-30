@@ -40,45 +40,43 @@ export class ClaseComponent implements OnInit {
   cols: any[] = [];
 
   constructor(
-    private claseService: clasesService, 
-    private messageService: MessageService, 
-    private confirmationService: ConfirmationService, 
+    private claseService: clasesService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private route: ActivatedRoute,
     private cursosService: CursoService,
-    ) { }
+  ) { }
 
   ngOnSubmit() {
     let clase = new Clase();
     clase.titulo = this.claseForm.controls.titulo.value;
     clase.descripcion = this.claseForm.controls.descripcion.value;
-    clase.fecha = this.claseForm.controls.fechaA.value; 
+    clase.fecha = this.claseForm.controls.fechaA.value;
     clase.cursosId = this.cursoId;
 
     console.log(clase);
-    
-    this.claseService.postClases(clase).subscribe(
-        response => {
-            
-            this.claseForm.reset;
 
-            this.messageService.add({severity:'success', summary: 'Success', detail: 'Clase creada exitosamente'});
-        },
-        error => {
-            this.messageService.add({severity:'error', summary: 'Error', detail: 'Error al crear la clase'});
-        }
+    this.claseService.postClases(clase).subscribe(
+      response => {
+
+        this.claseForm.reset;
+        if(this.cursoId) this.getClases(this.cursoId);
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Clase creada exitosamente' });
+      },
+      error => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al crear la clase' });
+      }
     );
 
     this.displayAgregarClaseDialog = false;
-}
+  }
 
-ngOnInit(): void {
+  ngOnInit(): void {
 
     // Route params
     const routeParams = this.route.snapshot.paramMap;
     this.cursoId = Number(routeParams.get('cursoId'));
 
-    console.log(this.cursoId);
-    
     this.claseForm = new FormGroup({
       titulo: new FormControl('', [Validators.required]),
       descripcion: new FormControl('', [Validators.required]),
@@ -91,78 +89,80 @@ ngOnInit(): void {
       fecha: new FormControl('', [Validators.required]),
     });
 
-
-    // Get clases de un curso
-    this.claseService.getClasesCurso(this.cursoId).subscribe(
-      result => {
-        this.clasesCurso = result;
-      }
-    );
+    this.getClases(this.cursoId);
 
     this.cols = [
       { field: 'titulo', header: 'Titulo' },
       { field: 'fecha', header: 'Fecha' },
       { field: 'descripcion', header: 'Descripción' },
-      
-      
-  ];
-}
+    ];
+  }
 
 
+  getClases(cursoId: number) {
+    // Get clases de un curso
+    this.claseService.getClasesCurso(cursoId).subscribe(
+      result => {
+        this.clasesCurso = result;
+      }
+    );
+  }
 
-ngOnDelete(id: number): void {
-  this.confirmationService.confirm({
-    message: 'Seguro que quieres eliminar la clase?',
-    accept: () => {
-      this.claseService.deleteClase(id).subscribe(
-        result => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Clase eliminada exitosamente' }),
-        error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
-      );
-    },
-    reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Eliminación de la clase cancelada' })
-  });
-}
+  ngOnDelete(id: number): void {
+    this.confirmationService.confirm({
+      message: 'Seguro que quieres eliminar la clase?',
+      accept: () => {
+        this.claseService.deleteClase(id).subscribe(
+          result => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Clase eliminada exitosamente' });
+            if (this.cursoId) this.getClases(this.cursoId);
+          },
+          error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
+        );
+      },
+      reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Eliminación de la clase cancelada' })
+    });
+  }
 
-ngOnEdit(): void {
-  let clase = new Clase();
-  clase.id = this.selectedClase.id;
-  clase.titulo = this.editarClaseForm.controls.titulo.value;
-  clase.descripcion = this.editarClaseForm.controls.descripcion.value;
-  clase.fecha = this.editarClaseForm.controls.fecha.value; 
-  clase.cursosId = this.cursoId;
-  
-  
-  
-  this.claseService.putClase(clase).subscribe(
+  ngOnEdit(): void {
+    let clase = new Clase();
+    clase.id = this.selectedClase.id;
+    clase.titulo = this.editarClaseForm.controls.titulo.value;
+    clase.descripcion = this.editarClaseForm.controls.descripcion.value;
+    clase.fecha = this.editarClaseForm.controls.fecha.value;
+    clase.cursosId = this.cursoId;
+
+    this.claseService.putClase(clase).subscribe(
       response => {
-        this.claseService.getClases();
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Clase modificada exitosamente'});
+        if(this.cursoId) this.getClases(this.cursoId);
+        this.displayEditarClaseDialog = false;
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Clase modificada exitosamente' });
       },
       error => {
-        this.messageService.add({severity:'error', summary: 'Error', detail: 'Error al modificar la clase'});
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al modificar la clase' });
       }
-  );
-}
-
-showEditarClaseDialog(clase : Clase): void {
-
-  this.selectedClase = clase;
-  if(clase.fecha){
-     this.fecha = new Date(clase.fecha);
+    );
   }
-  this.displayEditarClaseDialog = true;    
 
-}
+  showEditarClaseDialog(clase: Clase): void {
 
-convertirFecha(fecha : Date){
+    this.selectedClase = clase;
+    if (clase.fecha) {
+      this.fecha = new Date(clase.fecha);
+    }
+    this.displayEditarClaseDialog = true;
 
-  return moment(fecha).format("DD-MM-YYYY");
-  
-}
+  }
 
-showAgregarClaseDialog(): void {
-  this.displayAgregarClaseDialog = true;
-}
+  convertirFecha(fecha: Date) {
+
+    return moment(fecha).format("DD-MM-YYYY");
+
+  }
+
+  showAgregarClaseDialog(): void {
+    this.displayAgregarClaseDialog = true;
+  }
 
 }
 

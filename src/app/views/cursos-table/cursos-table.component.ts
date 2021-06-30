@@ -42,7 +42,7 @@ export class CursosTableComponent implements OnInit {
     private estudianteCursoService: EstudianteCursoService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.editarCursoForm = new FormGroup({
@@ -52,15 +52,13 @@ export class CursosTableComponent implements OnInit {
       docentes: new FormControl(''),
     });
     this.getCursos();
-    this.docentes = this.docenteService.getDocentes();
+    if (this.rol?.includes("ADMIN")) this.docentes = this.docenteService.getDocentes();
 
     this.cols = [
       { field: 'nombre', header: 'Nombre' },
       { field: 'descripcion', header: 'Descripción' },
       { field: 'programa', header: 'Programa' },
-      
-      
-  ];
+    ];
   }
 
   getCursos() {
@@ -131,14 +129,18 @@ export class CursosTableComponent implements OnInit {
 
   ngOnSubmitEdit(): void {
     this.selectedCurso.nombre = this.editarCursoForm.controls.nombre.value;
-    this.selectedCurso.descripcion =
-      this.editarCursoForm.controls.descripcion.value;
+    this.selectedCurso.descripcion = this.editarCursoForm.controls.descripcion.value;
     this.selectedCurso.programa = this.editarCursoForm.controls.programa.value;
-    this.selectedCurso.userId = this.editarCursoForm.controls.docentes.value;
+    this.selectedCurso.docenteId = this.editarCursoForm.controls.docentes.value;
+    this.selectedCurso.docente = {};
 
+    console.log(this.selectedCurso);
+    
     this.cursosService.putCurso(this.selectedCurso).subscribe(
       (response) => {
+        this.displayEditarCursoDialog = false;
         this.getCursos();
+        this.editarCursoForm.reset();
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
@@ -146,6 +148,8 @@ export class CursosTableComponent implements OnInit {
         });
       },
       (error) => {
+        console.log(error);
+
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -160,12 +164,14 @@ export class CursosTableComponent implements OnInit {
       message: 'Seguro que quieres eliminar este curso?',
       accept: () => {
         this.cursosService.deleteCurso(idCurso).subscribe(
-          (result) =>
+          (result) => {
             this.messageService.add({
               severity: 'success',
               summary: 'Success',
               detail: 'Curso eliminado exitosamente',
-            }),
+            });
+            this.getCursos();
+          },
           (error) =>
             this.messageService.add({
               severity: 'error',
@@ -173,7 +179,6 @@ export class CursosTableComponent implements OnInit {
               detail: error,
             })
         );
-        window.location.reload();
       },
       reject: () =>
         this.messageService.add({
@@ -186,6 +191,8 @@ export class CursosTableComponent implements OnInit {
 
   showEditarCursoDialog(curso: Curso): void {
     this.selectedCurso = curso;
+    console.log(this.selectedCurso);
+    
     this.displayEditarCursoDialog = true;
   }
 }

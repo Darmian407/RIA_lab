@@ -5,6 +5,7 @@ import { Role } from 'src/app/model/Role';
 import { AuthService } from 'src/app/services/Auth/auth.service';
 import { UserRole } from 'src/app/model/UserRole';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios-grid',
@@ -13,7 +14,7 @@ import { MessageService } from 'primeng/api';
 })
 export class UsuariosGridComponent implements OnInit {
 
-  constructor(private authService: AuthService, private messageService: MessageService) { }
+  constructor(private authService: AuthService, private messageService: MessageService, private router: Router) { }
 
   usuarios: ApplicationUser[] = [];
 
@@ -42,10 +43,14 @@ export class UsuariosGridComponent implements OnInit {
       nombre: new FormControl('', [Validators.required])
     }
 
-    // Cargo los usuarios del sistema
-    this.authService.getUsers().subscribe(result => this.usuarios = result);
+    this.getUsers();
 
     this.getRoles();
+  }
+
+  getUsers() {
+    // Cargo los usuarios del sistema
+    this.authService.getUsers().subscribe(result => this.usuarios = result);
   }
 
   getRoles(): void {
@@ -66,7 +71,11 @@ export class UsuariosGridComponent implements OnInit {
     userRole.userName = this.usuarioSeleccionado.userName;
 
     this.authService.postUserRole(userRole).subscribe(
-      result => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Rol agregado exitosamente' }),
+      result => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Rol agregado exitosamente' });
+        this.displayRoleDialog = false;
+        this.getUsers();
+      },
       error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
     );
   }

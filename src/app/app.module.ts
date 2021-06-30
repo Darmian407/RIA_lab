@@ -44,6 +44,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ChartModule } from 'primeng/chart';
+import { CheckboxModule } from 'primeng/checkbox';
 
 // Services
 import { AuthService } from './services/Auth/auth.service';
@@ -111,6 +112,7 @@ import { EstadisticasCursoComponent } from './views/estadisticas-curso/estadisti
     VirtualScrollerModule,
     InputNumberModule,
     ChartModule,
+    CheckboxModule,
   ],
   providers: [
     AuthService,
@@ -130,4 +132,4 @@ import { EstadisticasCursoComponent } from './views/estadisticas-curso/estadisti
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -23,7 +23,7 @@ import { Estudiante } from 'src/app/model/Estudiante';
 })
 export class EvaluacionComponent implements OnInit {
 
-  public clonedCalificaciones: CalificacionEstudiante[]= [];
+  public clonedCalificaciones: CalificacionEstudiante[] = [];
 
   constructor(
     private estudianteCursoService: EstudianteCursoService,
@@ -53,6 +53,18 @@ export class EvaluacionComponent implements OnInit {
     const routeParams = this.route.snapshot.paramMap;
     this.calificacionId = routeParams.get('calificacionId');
 
+    this.getCalificaciones();
+
+    this.cols = [
+      { field: 'documento', header: 'Documento' },
+      { field: 'primerApellido', header: 'Primer Apellido' },
+      { field: 'segundoApellido', header: 'Segundo Apellido' },
+      { field: 'primerNombre', header: 'Primer Nombre' },
+      { field: 'segundoNombre', header: 'Segundo Nombre' },
+    ];
+  }
+
+  getCalificaciones() {
     if (this.calificacionId) {
       this.calificacionService.getCalificaciones(Number(this.calificacionId)).subscribe(
         response => {
@@ -68,88 +80,70 @@ export class EvaluacionComponent implements OnInit {
                     this.form.addControl(element.estudiante.id.toString(), new FormControl(Validators.required));
                   }
                 });
-                console.log(this.form);
                 this.estudiantes = response;
               },
-              error => {
-
-              }
+              error => { }
             );
           }
           this.calificacionEstudianteService.getCalificacionEstudiantesCalificacion(this.calificacion?.id).subscribe(
             response => {
               this.calificacionesGet = response;
-
-
             },
-            error => {
-
-            }
+            error => { }
           );
         },
-        error => {
-        },
+        error => { },
       );
     }
-    this.cols = [
-      { field: 'documento', header: 'Documento' },
-      { field: 'primerApellido', header: 'Primer Apellido' },
-      { field: 'segundoApellido', header: 'Segundo Apellido' },
-      { field: 'primerNombre', header: 'Primer Nombre' },
-      { field: 'segundoNombre', header: 'Segundo Nombre' },
-      
-  ];
   }
 
-  calificado(idEstudiante: number| undefined) {
+  calificado(idEstudiante: number | undefined) {
     return this.calificacionesGet.find(elem => elem.estudiante.id === idEstudiante)
   }
 
-  ngOnSubmit() {
-    this.estudiantes.forEach(elem => {
-      if (elem.estudiante?.id && !this.calificado(elem.estudiante.id)) {
+  async ngOnSubmit() {
+    for (let index = 0; index < this.estudiantes.length; index++) {
+      const elem = this.estudiantes[index];
 
-        let control = this.form.get(elem.estudiante?.id?.toString())
-        console.log(control?.value);
-        let calificacionEstudiante: CalificacionEstudiante = {
-          estudiantesId: elem.estudiante?.id,
-          calificacionesId: Number(this.calificacionId),
-          nota: control?.value,
-        }
+      try {
+        if (elem.estudiante?.id && !this.calificado(elem.estudiante.id)) {
 
-        this.calificacionEstudianteService.postCalificacionEstudiante(calificacionEstudiante).subscribe(
-          response => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificaciones agregadas exitosamente' });
-          },
-          error => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al agregar califiaciones' });
+          let control = this.form.get(elem.estudiante?.id?.toString())
+          let calificacionEstudiante: CalificacionEstudiante = {
+            estudiantesId: elem.estudiante?.id,
+            calificacionesId: Number(this.calificacionId),
+            nota: control?.value,
           }
-        )
 
-
-
+          await this.calificacionEstudianteService.postCalificacionEstudiante(calificacionEstudiante).toPromise();
+        }
+      } catch (error) {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al agregar califiaciones' });
       }
-    });
+
+    }
+    this.getCalificaciones();
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificaciones agregadas exitosamente' });
   }
 
   onRowEditInit(estudiante: Estudiante, index: number) {
     this.clonedCalificaciones[index] = { ...this.calificado(estudiante.id) };
-    console.log(this.clonedCalificaciones);
   }
 
   onRowEditSave(estudiante: Estudiante, index: number) {
-      delete this.clonedCalificaciones[index];
-      this.calificacionEstudianteService.putCalificacionEstudiante(this.calificado(estudiante.id)).subscribe(
-        response => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificacion editada exitosamente' });
-        },
-        error => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al editar califiaciones' });
-        }
-      )
+    delete this.clonedCalificaciones[index];
+    this.calificacionEstudianteService.putCalificacionEstudiante(this.calificado(estudiante.id)).subscribe(
+      response => {
+        this.getCalificaciones();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificacion editada exitosamente' });
+      },
+      error => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al editar califiaciones' });
+      }
+    )
   }
 
-  onRowEditCancel(index: number, idEstudiante:number) {
+  onRowEditCancel(index: number, idEstudiante: number) {
     this.calificacionesGet[this.calificacionesGet.findIndex(elem => elem.estudiante.id === idEstudiante)] = this.clonedCalificaciones[index];
     delete this.clonedCalificaciones[index];
   }
@@ -160,7 +154,10 @@ export class EvaluacionComponent implements OnInit {
       accept: () => {
         let calificacionEst = this.calificacionesGet.find(calif => calif.estudiante.id === idEstudiante);
         this.calificacionEstudianteService.deleteCalificacionEstudiante(calificacionEst.id).subscribe(
-          result => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificacion eliminada exitosamente' }),
+          result => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Calificacion eliminada exitosamente' });
+            this.getCalificaciones();
+          },
           error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
         );
       },

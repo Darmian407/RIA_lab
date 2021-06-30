@@ -41,34 +41,8 @@ export class AsistenciaComponent implements OnInit {
     // Route params
     const routeParams = this.route.snapshot.paramMap;
     this.claseId = routeParams.get('claseId');
-    
-    if (this.claseId) {
-      this.claseService.getClase(this.claseId).subscribe(
-        response => {
-          this.clase = response; 
-          if (this.clase?.cursosId) {
-            this.estudianteCursoService.getEstudiantesCurso(this.clase?.cursosId).subscribe(
-              response => {
-                this.estudiantes = response;
-              },
-              error => {
-      
-              }
-            );
-          }
-          this.claseEstudianteService.getClaseEstudiantesClase(this.clase?.id).subscribe(
-            response => {
-              this.asistenciasGet = response;
-            },
-            error => {
-      
-            }
-          );
-        },
-        error => {
-         },
-      );
-    }
+
+    this.getClase();
 
     this.cols = [
       { field: 'documento', header: 'Documento' },
@@ -76,72 +50,99 @@ export class AsistenciaComponent implements OnInit {
       { field: 'segundoApellido', header: 'Segundo Apellido' },
       { field: 'primerNombre', header: 'Primer Nombre' },
       { field: 'segundoNombre', header: 'Segundo Nombre' },
-      
-      
-  ];
-    
+    ];
   }
 
-  onCheckboxChange(e: any) {
+  getClase() {
+    if (this.claseId) {
+      this.claseService.getClase(this.claseId).subscribe(
+        response => {
+          this.clase = response;
+          if (this.clase?.cursosId) {
+            this.estudianteCursoService.getEstudiantesCurso(this.clase?.cursosId).subscribe(
+              response => {
+                this.estudiantes = response;
+              },
+              error => { }
+            );
+          }
+          this.claseEstudianteService.getClaseEstudiantesClase(this.clase?.id).subscribe(
+            response => {
+              this.asistenciasGet = response;
+            },
+            error => { }
+          );
+        },
+        error => { },
+      );
+    }
+  }
 
-    if (e.target.checked) {
-      this.asistencias.push(Number(e.target.value));
+  onCheckboxChange(e: any, idEstudiante: number) {
+    if (e.checked) {
+      this.asistencias.push(idEstudiante);
     } else {
-      const index = this.asistencias.findIndex(x => x.value === e.target.value);
+      const index = this.asistencias.findIndex(x => x.value === idEstudiante);
       this.asistencias.splice(index, 1)
     }
   }
 
-  onSubmit() {
-    let asistenciasaaa: ClaseEstudiante[] = [];
-    this.estudiantes.forEach(elem => {
-      if (elem.estudiante &&elem.estudiante.id && !this.asistio(elem.estudiante.id)) {
-        let asistencia: ClaseEstudiante = {
-          clasesId: this.clase?.id,
-          estudiantesId: elem.estudiante.id,
-          asiste: this.asistencias.includes(elem.estudiante.id),
-        };
-        this.claseEstudianteService.postClaseEstudiante(asistencia).subscribe(
-          response => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia pasada correctamente' });
-          },
-          error => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
+  async onSubmit() {
+    for (let index = 0; index < this.estudiantes.length; index++) {
+      const elem = this.estudiantes[index];
 
-          }
-        );
-          
+      try {
+        if (elem.estudiante && elem.estudiante.id && !this.asistio(elem.estudiante.id)) {
+          let asistencia: ClaseEstudiante = {
+            clasesId: this.clase?.id,
+            estudiantesId: elem.estudiante.id,
+            asiste: this.asistencias.includes(elem.estudiante.id),
+          };
+          await this.claseEstudianteService.postClaseEstudiante(asistencia).toPromise();
+        }
       }
-    })
+      catch (error) {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
+      }
+    }
+
+    this.getClase();
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia pasada correctamente' });
   }
 
   asistio(idEstudiante: number): ClaseEstudiante | undefined {
     return this.asistenciasGet.find(asistencia => asistencia.estudiante.id === idEstudiante);
   }
 
-  onEdit(idEstudiante: number){
+  onEdit(idEstudiante: number) {
     this.confirmationService.confirm({
       message: 'Seguro que quiere cambiar la asistencia?',
       accept: () => {
         let asistencia = this.asistenciasGet.find(asistencia => asistencia.estudiante.id === idEstudiante);
         asistencia.asiste = !asistencia.asiste;
         this.claseEstudianteService.putClaseEstudiante(asistencia).subscribe(
-          result => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia editada exitosamente' }),
-          error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error }) 
+          result => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia editada exitosamente' });
+            this.getClase();
+          },
+          error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
         );
       },
       reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Edicion de la asistencia cancelada' })
     });
   }
 
-  onDelete(idEstudiante: number){
+  onDelete(idEstudiante: number) {
     this.confirmationService.confirm({
       message: 'Seguro que quiere eliminar la asistencia?',
       accept: () => {
         let asistencia = this.asistenciasGet.find(asistencia => asistencia.estudiante.id === idEstudiante);
         this.claseEstudianteService.deleteClaseEstudiante(asistencia.id).subscribe(
-          result => this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia eliminada exitosamente' }),
-          error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error }) 
+          result => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Asistencia eliminada exitosamente' });
+            this.getClase();
+          },
+          error => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
         );
       },
       reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Eliminación de la asistencia cancelada' })

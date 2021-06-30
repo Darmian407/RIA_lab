@@ -5,6 +5,7 @@ import { estudianteService } from '../../services/EstudianteService/estudiante.s
 import { Message } from '../../model/Message';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import * as moment from 'moment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-estudiantes-grid',
@@ -39,6 +40,7 @@ export class EstudiantesGridComponent implements OnInit {
     public estudianteService: estudianteService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -59,8 +61,7 @@ export class EstudiantesGridComponent implements OnInit {
       { field: 'primerNombre', header: 'Primer Nombre' },
       { field: 'segundoNombre', header: 'Segundo Nombre' },
       { field: 'fechaNacimiento', header: 'Fecha de Nacimiento' },
-      
-  ];
+    ];
 
   }
 
@@ -80,6 +81,9 @@ export class EstudiantesGridComponent implements OnInit {
       response => {
         this.getEstudiantes();
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Estudiante modificado exitosamente' });
+
+        this.getEstudiantes();
+        this.displayEditarEstudianteDialog = false;
       },
       error => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al modificar el estudiante' });
@@ -103,19 +107,15 @@ export class EstudiantesGridComponent implements OnInit {
       message: 'Seguro que quieres eliminar este estudiante?',
       accept: () => {
         this.estudianteService.deleteEstudiante(idEstudiante).subscribe(
-          (response) =>
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Estudiante eliminado exitosamente' }),
+          (response) => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Estudiante eliminado exitosamente' });
+            this.getEstudiantes();
+          },
           (error) => this.messageService.add({ severity: 'error', summary: 'Error', detail: error })
         );
-        window.location.reload();
       },
       reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Eliminación del Estudiante cancelada' })
     });
-  }
-
-
-  editEstudiante(estudiante: Estudiante) {
-
   }
 
   showEditarEstudianteDialog(estudiante: Estudiante): void {
@@ -143,8 +143,8 @@ export class EstudiantesGridComponent implements OnInit {
 
   prev() {
     if (this.isLastPage()) {
-    this.index--;
-    this.getEstudiantes();
+      this.index--;
+      this.getEstudiantes();
     }
   }
 
