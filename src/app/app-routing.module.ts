@@ -23,16 +23,18 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'estudiante', component: EstudianteComponent },
-  { path: 'estudiantes', component: EstudiantesGridComponent },
-  { path: 'curso', component: CursoComponent },
+  { path: 'estudiante', component: EstudianteComponent, canActivate: [AdminGuard] },
+  { path: 'estudiantes', component: EstudiantesGridComponent, canActivate: [AdminGuard] },
+  { path: 'curso', component: CursoComponent, canActivate: [AdminGuard] },
   {
     path: 'cursos',
     component: CursosTableComponent,
+    canActivate: [AdminGuard]
   },
   {
     path: 'miscursos',
     component: CursosTableComponent,
+    canActivate: [DocenteGuard]
   },
   {
     path: 'curso/estudiantes/:cursoId',
@@ -51,18 +53,22 @@ const routes: Routes = [
   {
     path: 'curso/clases/asistencia/:claseId',
     component: AsistenciaComponent,
+    canActivate: [DocenteGuard]
   },
   {
     path: 'curso/clases/:cursoId',
     component: ClaseComponent,
+    canActivate: [DocenteGuard]
   },
   {
     path: 'curso/calificaciones/:cursoId',
     component: CalificacionesComponent,
+    canActivate: [DocenteGuard]
   },
   {
     path: 'curso/calificaciones/evaluacion/:calificacionId',
     component: EvaluacionComponent,
+    canActivate: [DocenteGuard]
   },
   {
     path: 'curso/estadisticas/:id',
@@ -76,4 +82,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
