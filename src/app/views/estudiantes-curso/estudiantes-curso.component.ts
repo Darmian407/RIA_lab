@@ -242,4 +242,14 @@ export class EstudiantesCursoComponent implements OnInit {
       reject: () => this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Eliminación de la Calificacion cancelada' })
     });
   }
+
+  selccionarEstudiante(e: any) {
+    let estudiante = this.estudiantes.find((elem) => {
+      return elem.id === e.value;
+    });
+    
+    if(estudiante) this.selectedEstudiante = estudiante;
+    console.log(this.selectedEstudiante);
+    
+  }
 }
