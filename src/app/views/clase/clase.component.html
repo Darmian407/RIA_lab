@@ -22,15 +22,15 @@
                 <td>{{convertirFecha(clases_curso.fecha)}}</td>
                 <td>{{clases_curso.descripcion}}</td> -->
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-pencil"
+                    <button pButton pRipple type="button" icon="pi pi-pencil" title="Editar"
                         class="p-button-rounded p-button-warning p-mr-2"
                         (click)="showEditarClaseDialog(clases_curso)">
                     </button>
-                    <button pButton pRipple type="button" icon="pi pi-trash"
+                    <button pButton pRipple type="button" icon="pi pi-trash" title="Eliminar"
                         class="p-button-rounded p-button-danger p-mr-2"
                         (click)="ngOnDelete(clases_curso.id)">
                     </button>
-                    <button pButton pRipple type="button" icon="pi pi-check-square"
+                    <button pButton pRipple type="button" icon="pi pi-check-square" title="Asistencia"
                         class="p-button-rounded p-button-help p-mr-2"
                         [routerLink]="['/curso/clases/asistencia', clases_curso.id]">
                     </button>

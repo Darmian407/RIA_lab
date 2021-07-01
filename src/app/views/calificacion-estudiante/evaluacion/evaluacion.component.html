@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                                 <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                    icon="pi pi-pencil" 
+                                    icon="pi pi-pencil" title="Editar" 
                                     class="p-button-rounded p-button-warning" (click)="onRowEditInit(estudiante_curso.estudiante, ri)"></button>
                                 <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
                                     icon="pi pi-check" (click)="onRowEditSave(estudiante_curso.estudiante,ri)"
@@ -70,7 +70,7 @@
                                     class="p-button-rounded p-button-text p-button-danger"></button>
                                 <div class="p-col">
 
-                                    <button pButton pRipple type="button" icon="pi pi-trash"
+                                    <button pButton pRipple type="button" icon="pi pi-trash" title="Eliminar"
                                         class="p-button-rounded p-button-danger"
                                         (click)="onDelete(estudiante_curso.estudiante.id)">
                                     </button>

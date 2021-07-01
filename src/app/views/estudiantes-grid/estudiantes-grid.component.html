@@ -47,15 +47,15 @@
         <td>
           <div class="p-grid">
             <div class="p-col">
-              <button pButton pRipple type="button" icon="pi pi-user-edit" class="p-button-rounded p-button-warning"
+              <button pButton pRipple type="button" icon="pi pi-user-edit" title="Editar" class="p-button-rounded p-button-warning"
                 (click)="showEditarEstudianteDialog(estudiante)"></button>
             </div>
             <div class="p-col">
-              <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
+              <button pButton pRipple type="button" icon="pi pi-trash" title="Eliminar" class="p-button-rounded p-button-danger"
                 (click)="deleteEstudiante(estudiante.id)"></button>
             </div>
             <div class="p-col">
-              <button pButton pRipple type="button" icon="pi pi-book" class="p-button-rounded p-button-primary"
+              <button pButton pRipple type="button" icon="pi pi-book" title="Cursos" class="p-button-rounded p-button-primary"
                 [routerLink]="'/cursos/estudiante/' + estudiante.id"></button>
             </div>
           </div>
