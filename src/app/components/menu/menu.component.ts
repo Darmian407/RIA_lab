@@ -15,6 +15,9 @@ export class MenuComponent implements OnInit {
   @Input()
   roles?: string[];
 
+  @Input()
+  userName?: string;
+
   items: MenuItem[] = [];
 
   ngOnInit() {
@@ -54,35 +57,51 @@ export class MenuComponent implements OnInit {
             { separator: true },
             ]
           },
-          {
-            label: 'Usuarios',
-            icon: 'pi pi-pw pi-users',
-            items: [{
-              label: 'Lista',
-              icon: 'pi pi-fw pi-list',
-              url: 'usuarios',
-            },
-            { separator: true },
-            ]
-          }
         );
+      }
+      console.log(this.userName);
+
+      if (this.userName === 'admin') {
+        this.items.push({
+          label: 'Usuarios',
+          icon: 'pi pi-pw pi-users',
+          items: [{
+            label: 'Lista',
+            icon: 'pi pi-fw pi-list',
+            url: 'usuarios',
+          },
+          { separator: true },
+          ]
+        });
       }
 
       if (this.roles.includes("DOCENTE")) {
-        this.items.push(
-          {
-            label: 'Cursos',
-            icon: 'pi pi-pw pi-book',
-            items: [
-              {
-                label: 'Mis Cursos',
-                icon: 'pi pi-fw pi-list',
-                routerLink: '/miscursos'
-              },
-              { separator: true },
-            ]
-          },
-        );
+        let cursos = this.items.find((elem) => {
+          return elem.label === 'Cursos'
+        });
+
+        if (cursos) {
+          cursos.items?.push({
+            label: 'Mis Cursos',
+            icon: 'pi pi-fw pi-list',
+            routerLink: '/miscursos'
+          });
+        } else {
+          this.items.push(
+            {
+              label: 'Cursos',
+              icon: 'pi pi-pw pi-book',
+              items: [
+                {
+                  label: 'Mis Cursos',
+                  icon: 'pi pi-fw pi-list',
+                  routerLink: '/miscursos'
+                },
+                { separator: true },
+              ]
+            },
+          );
+        }
       }
     }
   }

@@ -4,7 +4,7 @@
 <div *ngIf="user; else elseBlock">
     <div class="p-grid">
         <div class="p-col-12 p-md-3">
-            <app-menu [roles]="user.roles"></app-menu>
+            <app-menu [userName]="user.username" [roles]="user.roles"></app-menu>
         </div>
         <div class="p-col-12 p-md-9">
             <router-outlet></router-outlet>
