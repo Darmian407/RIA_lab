@@ -4,7 +4,7 @@
             <form [formGroup]="estudianteForm" (ngSubmit)="ngOnSubmit()">
                 <div class="p-grid p-formgrid p-flex-column p-fluid">
                     <div class="p-col">
-                        <p-message *ngIf="!estudianteForm.valid" severity="error" text="Fatan Campos"></p-message>
+                        <p-message *ngIf="!estudianteForm.valid" severity="error" text="Faltan Campos"></p-message>
                         <p-message *ngIf="message" severity="{{message.type}}" text="{{message.msg}}"></p-message>
                     </div>
                     <div class="p-col p-mt-3">
