@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './services/AdminGuard/admin.guard';
 import { DocenteGuard } from './services/DocenteGuard/docente.guard';
+import { LoginGuardGuard } from './services/LoginGuard/login-guard.guard';
 import { UserAdminGuard } from './services/UserAdminGuard/user-admin.guard';
 import { AsistenciaComponent } from './views/asistencia/asistencia.component';
 import { EvaluacionComponent } from './views/calificacion-estudiante/evaluacion/evaluacion.component';
@@ -39,6 +40,7 @@ const routes: Routes = [
   {
     path: 'curso/estudiantes/:cursoId',
     component: EstudiantesCursoComponent,
+    canActivate: [LoginGuardGuard]
   },
   {
     path: 'usuarios',
@@ -48,8 +50,9 @@ const routes: Routes = [
   {
     path: 'cursos/estudiante/:id',
     component: CursosTableComponent,
+    canActivate: [LoginGuardGuard]
   },
-  { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent },
+  { path: 'curso/estudiantes/:cursoId', component: EstudiantesCursoComponent, canActivate: [LoginGuardGuard] },
   {
     path: 'curso/clases/asistencia/:claseId',
     component: AsistenciaComponent,

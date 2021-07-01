@@ -61,6 +61,7 @@ import { CalificacionesComponent } from './views/calificaciones/calificaciones.c
 import { EvaluacionComponent } from './views/calificacion-estudiante/evaluacion/evaluacion.component';
 import { UserAdminGuard } from './services/UserAdminGuard/user-admin.guard';
 import { EstadisticasCursoComponent } from './views/estadisticas-curso/estadisticas-curso.component';
+import { LoginGuardGuard } from './services/LoginGuard/login-guard.guard';
 
 @NgModule({
   declarations: [
@@ -123,6 +124,7 @@ import { EstadisticasCursoComponent } from './views/estadisticas-curso/estadisti
     AdminGuard,
     UserAdminGuard,
     DocenteGuard,
+    LoginGuardGuard,
     ClaseEstudianteService,
     {
       provide: HTTP_INTERCEPTORS,

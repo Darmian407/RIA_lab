@@ -5,23 +5,23 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DocenteGuard implements CanActivate {
+export class LoginGuardGuard implements CanActivate {
   constructor(private router: Router) {}
-
+  
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
+    state: RouterStateSnapshot
+  ): boolean {
     let usuario = localStorage.getItem('user');
 
     if (typeof usuario === 'string') {
       let user = JSON.parse(usuario);
-      if (user && user.roles) {
-        return user.roles.includes("DOCENTE");
+      if (user) {
+        return true;
       }
     }
 
     this.router.navigate(['/login']);
     return false;
   }
-  
 }

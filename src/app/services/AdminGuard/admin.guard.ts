@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -12,6 +13,8 @@ import { ApplicationUser } from 'src/app/model/ApplicationUser';
   providedIn: 'root',
 })
 export class AdminGuard implements CanActivate {
+  constructor(private router: Router) {}
+  
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -24,6 +27,7 @@ export class AdminGuard implements CanActivate {
         return user.roles.includes('ADMIN');
       }
     }
+    this.router.navigate(['/login']);
     return false;
   }
 }
